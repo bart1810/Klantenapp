@@ -1,9 +1,10 @@
-package android.compose
+package android.compose.views.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Column
+import android.compose.R
+import android.compose.bottombar.BottomNavGraph
+import android.compose.bottombar.BottomNavigationItem
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -12,20 +13,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -43,14 +41,14 @@ fun MainScreen() {
                      colors = TopAppBarDefaults.topAppBarColors(),
                      title = {
                          Text(
-                             text = "AutoMaat",
+                             text = stringResource(id = R.string.app_name),
                              fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                              fontWeight = FontWeight.Bold
                          )
                      }
                  )
         },
-        bottomBar = { BottomBar(navController = navController)}
+        bottomBar = { BottomBar(navController = navController) }
     ) {
         BottomNavGraph(navController = navController)
     }
@@ -58,7 +56,7 @@ fun MainScreen() {
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController ) {
     val screens = listOf(
         BottomNavigationItem.Cars,
         BottomNavigationItem.Bookings,
@@ -67,7 +65,10 @@ fun BottomBar(navController: NavHostController) {
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    NavigationBar {
+    NavigationBar(
+        containerColor = Color.White,
+        contentColor = Color.Transparent
+    ) {
         screens.forEach { screen ->
             AddItem(screen = screen, currentDestination = currentDestination, navController = navController)
         }

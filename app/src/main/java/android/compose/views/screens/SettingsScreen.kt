@@ -1,6 +1,5 @@
-package android.compose.screens
+package android.compose.views.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -15,15 +14,14 @@ import androidx.compose.ui.text.font.FontWeight
 fun SettingsScreen() {
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Red),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
      Text(
          text = "Settings",
          fontSize = MaterialTheme.typography.headlineMedium.fontSize,
          fontWeight = FontWeight.Bold,
-         color = Color.White
+         color = Color.Black
          )
     }
 }

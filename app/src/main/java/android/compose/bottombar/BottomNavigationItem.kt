@@ -1,4 +1,6 @@
-package android.compose
+package android.compose.bottombar
+
+import android.compose.R
 
 open class BottomNavigationItem(
     val title: String,

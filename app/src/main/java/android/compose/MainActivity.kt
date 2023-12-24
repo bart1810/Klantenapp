@@ -1,5 +1,6 @@
 package android.compose
 
+import android.compose.views.screens.MainScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
