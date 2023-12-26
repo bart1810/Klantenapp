@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -14,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TextComponent(value: String, fontSize: Int = 24, fontWeight: FontWeight = FontWeight.Normal) {
+fun TextComponent(value: String, fontSize: Int = 24, fontWeight: FontWeight = FontWeight.Normal, textColor: Color = TextColor) {
     Text(
         text = value,
         modifier = Modifier.fillMaxWidth().heightIn(min = 40.dp),
@@ -24,7 +25,7 @@ fun TextComponent(value: String, fontSize: Int = 24, fontWeight: FontWeight = Fo
             fontStyle = FontStyle.Normal,
             color = TextColor
         ),
-        color = TextColor,
+        color = textColor,
         textAlign = TextAlign.Start
     )
 }

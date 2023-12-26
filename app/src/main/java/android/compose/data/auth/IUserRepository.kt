@@ -1,20 +1,22 @@
-package android.compose.data
+package android.compose.data.auth
 
 import android.compose.Resource
-import android.compose.data.model.CarsItem
+import android.compose.data.AutoMaatApi
+import android.compose.models.LoginRequest
+import android.compose.models.LoginResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.IOException
 
-class CarsRepositoryImplementation(
+class IUserRepository(
     private val autoMaatApi: AutoMaatApi
-):  CarsRepository {
-
-    override suspend fun getCarsList(): Flow<Resource<List<CarsItem>>> {
+): UserRepository {
+    override suspend fun loginUser(loginRequest: LoginRequest): Flow<Resource<LoginResponse>> {
         return flow {
-            val carsFromAutoMaatApi = try {
-                autoMaatApi.getAllCars()
+            val loginFromApi = try {
+                autoMaatApi.loginUser(loginRequest)
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Error loading cars"))
@@ -29,7 +31,8 @@ class CarsRepositoryImplementation(
                 return@flow
             }
 
-            emit(Resource.Success(carsFromAutoMaatApi))
+            emit(Resource.Success(loginFromApi.body()))
         }
     }
+//        return  autoMaatApi.loginUser(loginRequest = loginRequest)
 }

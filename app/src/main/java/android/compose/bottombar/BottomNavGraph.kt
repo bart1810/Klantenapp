@@ -1,10 +1,11 @@
 package android.compose.bottombar
 
 import android.compose.views.screens.BookingsScreen
-import android.compose.views.screens.CarsScreen
+import android.compose.views.screens.cars.CarsScreen
 import android.compose.views.screens.NotificationsScreen
 import android.compose.views.screens.SettingsScreen
-import android.compose.views.screens.authenticate.SignUpScreen
+import android.compose.views.screens.auth.LoginScreen
+import android.compose.views.screens.auth.SignUpScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,7 +23,7 @@ fun BottomNavGraph(navController: NavHostController) {
         composable(route = BottomNavigationItem.Bookings.route) {
             if (!token.isNullOrBlank()) {
                 BookingsScreen()
-            } else SignUpScreen()
+            } else LoginScreen()
         }
         composable(route = BottomNavigationItem.Notifications.route) {
             if (!token.isNullOrBlank()) {

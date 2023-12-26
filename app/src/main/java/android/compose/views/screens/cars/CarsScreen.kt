@@ -1,14 +1,10 @@
-package android.compose.views.screens
+package android.compose.views.screens.cars
 
 import android.compose.RetrofitInstance
-import android.compose.data.CarsRepositoryImplementation
-import android.compose.data.CarsViewModel
-import android.compose.data.model.CarsItem
-import android.compose.ui.theme.AndroidComposeTheme
-import android.os.Bundle
+import android.compose.data.cars.CarsRepositoryImplementation
+import android.compose.models.CarItem
+import android.compose.viewmodels.CarsViewModel
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +22,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -83,7 +78,7 @@ fun CarsScreen() {
 }
 
 @Composable
-fun CarsItem(carsItem: CarsItem) {
+fun CarsItem(carsItem: CarItem) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -101,7 +96,7 @@ fun CarsItem(carsItem: CarsItem) {
 }
 
 @Composable
-fun CardDetails(carsItem: CarsItem) {
+fun CardDetails(carsItem: CarItem) {
     Column {
         Box(
             modifier = Modifier
@@ -111,25 +106,26 @@ fun CardDetails(carsItem: CarsItem) {
             AsyncImage(
                 model = "https://parkers-images.bauersecure.com/wp-images/18290/930x620/90-vauxhall-corsa-electric-best-small-cars.jpg",
                 contentDescription = "Car image",
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxWidth()
             )
         }
-        Text(
+        Column(
             modifier = Modifier
-                .padding(5.dp),
-            text = "${carsItem.brand} ${carsItem.model} ${carsItem.body.lowercase()}",
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        Text(
-            modifier = Modifier
-                .padding(start = 5.dp),
-            text = "Vanaf € ${carsItem.price}/dag"
-        )
+                .padding(start = 15.dp, bottom = 20.dp),
+        ) {
+            Text(
+                text = "${carsItem.brand} ${carsItem.model} ${carsItem.body.lowercase()}",
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = "Vanaf € ${carsItem.price}/dag"
+            )
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 5.dp),
+                .padding(end = 15.dp, bottom = 10.dp),
             horizontalArrangement = Arrangement.End
         ) {
             Button(
@@ -148,21 +144,5 @@ fun CardDetails(carsItem: CarsItem) {
 class CarsViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return CarsViewModel(CarsRepositoryImplementation(RetrofitInstance.autoMaatApi)) as T
-    }
-}
-
-class CarsActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AndroidComposeTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    CarsScreen()
-                }
-            }
-        }
     }
 }

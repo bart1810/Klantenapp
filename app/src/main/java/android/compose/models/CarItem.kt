@@ -1,6 +1,6 @@
-package android.compose.data.model
+package android.compose.models
 
-data class CarsItem(
+data class CarItem(
     val body: String,
     val brand: String,
     val engineSize: Int,

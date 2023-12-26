@@ -2,8 +2,8 @@ package android.compose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Primary = Color(0xFF92A3FD)
-val Secondary = Color(0xFF9DCEFF)
+val Primary = Color(0xFFFFA500)
+val Secondary = Color(0xFFD6D6D6)
 val TextColor =  Color(0xFF191414)
 val AccentColor = Color(0xFFC58BF2)
 val White = Color(0xFFFFFFFF)
