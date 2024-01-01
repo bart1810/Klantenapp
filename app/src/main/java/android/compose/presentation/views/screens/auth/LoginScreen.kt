@@ -48,7 +48,6 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
 
-
     val usernameState = loginViewModel.usernameState.value
     val passwordState = loginViewModel.passwordState.value
     val rememberMeState = loginViewModel.rememberMeState.value
@@ -85,11 +84,12 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             TextFieldComponent(
+                value = usernameState.text,
                 label = stringResource(id = R.string.username), painterResource = painterResource(
                 id = R.drawable.account_circle
             ), onTextChanged = { loginViewModel.setUsername(it) })
 
-            PasswordComponent(label = stringResource(id = R.string.password), painterResource = painterResource(
+            PasswordComponent(value = passwordState.text, label = stringResource(id = R.string.password), painterResource = painterResource(
                 id = R.drawable.lock), onTextChanged = { loginViewModel.setPassword(it) })
 
             Row(

@@ -26,7 +26,7 @@ class IAuthRepository(
         }
     }
 
-    override suspend fun register(registerRequest: RegisterRequest): Resource<Unit> {
+    override suspend fun registerUser(registerRequest: RegisterRequest): Resource<Unit> {
         TODO("Not yet implemented")
     }
 }

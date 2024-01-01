@@ -28,12 +28,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PasswordComponent(label: String, painterResource: Painter, onTextChanged: (String) -> Unit) {
-
-    val password = remember {
-        mutableStateOf("")
-    }
-
+fun PasswordComponent(value: String, label: String, painterResource: Painter, onTextChanged: (String) -> Unit) {
     val passwordVisible = remember {
         mutableStateOf(false)
     }
@@ -49,9 +44,8 @@ fun PasswordComponent(label: String, painterResource: Painter, onTextChanged: (S
             focusedIndicatorColor = Color.Transparent
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        value = password.value,
+        value = value,
         onValueChange = {
-            password.value = it
             onTextChanged(it)
         },
         leadingIcon = { Icon(painter = painterResource, contentDescription = "") },

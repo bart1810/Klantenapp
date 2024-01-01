@@ -7,5 +7,5 @@ import android.compose.data.remote.request.RegisterRequest
 interface AuthRepository {
     suspend fun loginUser(loginRequest: LoginRequest): Resource<Unit>
 
-    suspend fun register(registerRequest: RegisterRequest):Resource<Unit>
+    suspend fun registerUser(registerRequest: RegisterRequest):Resource<Unit>
 }

@@ -11,21 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.Placeholder
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TextFieldComponent(label: String, painterResource: Painter, onTextChanged: (String) -> Unit) {
-    val textValue = remember {
-        mutableStateOf("")
-    }
+fun TextFieldComponent(value: String, label: String, painterResource: Painter, onTextChanged: (String) -> Unit) {
 
     TextField(
         modifier = Modifier.fillMaxWidth(),
@@ -38,9 +30,8 @@ fun TextFieldComponent(label: String, painterResource: Painter, onTextChanged: (
             focusedIndicatorColor = Color.Transparent
         ),
         keyboardOptions = KeyboardOptions.Default,
-        value = textValue.value,
+        value = "",
         onValueChange = {
-            textValue.value = it
             onTextChanged(it)
         },
         leadingIcon = { Icon(painter = painterResource, contentDescription = "") }

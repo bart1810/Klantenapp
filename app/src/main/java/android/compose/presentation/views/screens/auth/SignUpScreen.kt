@@ -4,6 +4,7 @@ import android.compose.R
 import android.compose.common.components.forms.PasswordComponent
 import android.compose.common.components.forms.TextFieldComponent
 import android.compose.common.components.text.TextComponent
+import android.compose.presentation.viewmodels.auth.RegisterViewModel
 import android.compose.ui.theme.Primary
 import android.compose.ui.theme.Secondary
 import androidx.compose.foundation.background
@@ -34,21 +35,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun SignUpScreen() {
-    val username = remember {
-        mutableStateOf("")
-    }
-    val email = remember {
-        mutableStateOf("")
-    }
-    val password = remember {
-        mutableStateOf("")
-    }
-    val confirmPassword = remember {
-        mutableStateOf("")
-    }
+fun SignUpScreen(
+    registerViewModel: RegisterViewModel = hiltViewModel()
+) {
+
+    val usernameState = registerViewModel.usernameState.value
+    val emailState = registerViewModel.emailState.value
+    val passwordState = registerViewModel.passwordState.value
+    val confirmPasswordState = registerViewModel.confirmPasswordState.value
+
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -66,20 +64,22 @@ fun SignUpScreen() {
             Spacer(modifier = Modifier.height(20.dp))
 
             TextFieldComponent(
+                value = usernameState.text,
                 label = stringResource(id = R.string.username), painterResource = painterResource(
                 id = R.drawable.account_circle
-            ), onTextChanged = { username.value = it })
+            ), onTextChanged = { registerViewModel.setUsername(it) })
 
             TextFieldComponent(
+                value = emailState.text,
                 label = stringResource(id = R.string.email), painterResource = painterResource(
-                id = R.drawable.email), onTextChanged = { email.value = it })
+                id = R.drawable.email), onTextChanged = { registerViewModel.setEmail(it) })
 
-            PasswordComponent(label = stringResource(id = R.string.password), painterResource = painterResource(
-                id = R.drawable.lock), onTextChanged = { password.value = it })
+            PasswordComponent(value = passwordState.text, label = stringResource(id = R.string.password), painterResource = painterResource(
+                id = R.drawable.lock), onTextChanged = { registerViewModel.setPassword(it) })
             Spacer(modifier = Modifier.height(30.dp))
 
-            PasswordComponent(label = stringResource(id = R.string.confirm_password), painterResource = painterResource(
-                id = R.drawable.lock), onTextChanged = { confirmPassword.value = it })
+            PasswordComponent(value = confirmPasswordState.text, label = stringResource(id = R.string.confirm_password), painterResource = painterResource(
+                id = R.drawable.lock), onTextChanged = { registerViewModel.setConfirmPassword(it) })
             Spacer(modifier = Modifier.height(30.dp))
 
             Row(
@@ -88,7 +88,7 @@ fun SignUpScreen() {
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { registerViewModel.registerUser() },
                     colors = ButtonDefaults.buttonColors(
                         Color(0xFFFFA500) // Orange color
                     )

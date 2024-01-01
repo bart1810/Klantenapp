@@ -1,4 +1,4 @@
-package android.compose.presentation.viewmodels.auth.states
+package android.compose.presentation.viewmodels.states
 
 data class TextFieldState(
     val text :  String = "",

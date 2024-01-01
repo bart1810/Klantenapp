@@ -6,6 +6,7 @@ import android.compose.data.repository.auth.AuthRepository
 import android.compose.data.repository.auth.IAuthRepository
 import android.compose.data.local.AuthPreferences
 import android.compose.domain.use_cases.LoginUseCase
+import android.compose.domain.use_cases.RegisterUseCase
 import android.compose.util.Constants.AUTH_PREFERENCES
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -69,9 +70,9 @@ object AppModule {
     }
 
 
-//    @Provides
-//    @Singleton
-//    fun providesRegisterUseCase(repository: AuthRepository): RegisterUseCase {
-//        return RegisterUseCase(repository)
-//    }
+    @Provides
+    @Singleton
+    fun providesRegisterUseCase(repository: AuthRepository): RegisterUseCase {
+        return RegisterUseCase(repository)
+    }
 }

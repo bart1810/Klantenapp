@@ -7,6 +7,8 @@ data class RegisterRequest(
     var username: String,
     @SerializedName("password")
     var password: String,
-    @SerializedName("rememberMe")
-    var rememberMe: Boolean
+    @SerializedName("password")
+    var email: String,
+    @SerializedName("langKey")
+    var langKey: String,
 )
