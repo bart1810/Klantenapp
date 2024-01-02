@@ -9,9 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavController
 
 @Composable
-fun NotificationsScreen() {
+fun NotificationsScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize(),

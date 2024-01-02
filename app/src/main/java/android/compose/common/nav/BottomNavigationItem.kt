@@ -1,8 +1,9 @@
-package android.compose.common.bottombar
+package android.compose.common.nav
 
 import android.compose.R
+import android.compose.common.Screens
 
-open class BottomNavigationItem(
+sealed class BottomNavigationItem(
     val title: String,
     val route: String,
     val selectedIcon: Int,
@@ -12,7 +13,7 @@ open class BottomNavigationItem(
 ) {
     object Cars : BottomNavigationItem(
         title = "Cars",
-        route = "cars",
+        route = Screens.CarScreen.route,
         selectedIcon = R.drawable.car_filled,
         unselectedIcon = R.drawable.car_outlined,
         hasNews = false,
@@ -20,7 +21,7 @@ open class BottomNavigationItem(
 
     object Bookings : BottomNavigationItem(
         title = "Bookings",
-        route = "bookings",
+        route = Screens.BookingsScreen.route,
         selectedIcon = R.drawable.book_filled,
         unselectedIcon = R.drawable.book_outlined,
         hasNews = false,
@@ -28,7 +29,7 @@ open class BottomNavigationItem(
 
     object Notifications : BottomNavigationItem(
         title = "Notifications",
-        route = "notifications",
+        route = Screens.NotificationsScreen.route,
         selectedIcon = R.drawable.bell_filled,
         unselectedIcon = R.drawable.bell_outlined,
         hasNews = false,
@@ -36,7 +37,7 @@ open class BottomNavigationItem(
 
     object Settings : BottomNavigationItem(
         title = "Settings",
-        route = "settings",
+        route = Screens.SettingsScreen.route,
         selectedIcon = R.drawable.settings_filled,
         unselectedIcon = R.drawable.settings_outlined,
         hasNews = false,

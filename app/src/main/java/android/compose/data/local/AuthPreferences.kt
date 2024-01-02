@@ -1,14 +1,32 @@
 package android.compose.data.local
 
-import android.compose.util.Constants.TOKEN
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import android.compose.di.dataStore
+import android.content.Context
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-class AuthPreferences(private val dataStore: DataStore<Preferences>) {
-    suspend fun saveAuthToken(loginToken:String){
-        dataStore.edit { pref ->
-            pref[TOKEN] = setOf(loginToken)
+class AuthPreferences(private val context: Context) {
+    companion object {
+        private val TOKEN_KEY = stringPreferencesKey("token")
+    }
+
+    fun getToken(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            preferences[TOKEN_KEY]
+        }
+    }
+
+    suspend fun saveToken(token: String) {
+        context.dataStore.edit { preferences ->
+            preferences[TOKEN_KEY] = token
+        }
+    }
+
+    suspend fun deleteToken() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(TOKEN_KEY)
         }
     }
 }

@@ -1,5 +1,6 @@
 package android.compose.presentation.views.screens.cars
 
+import android.compose.common.Screens
 import android.compose.util.RetrofitInstance
 import android.compose.data.repository.cars.CarsRepositoryImplementation
 import android.compose.data.remote.response.CarItemResponse
@@ -36,11 +37,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun CarsScreen() {
+fun CarsScreen(navController: NavController) {
     val viewModel: CarsViewModel = viewModel(factory = CarsViewModelFactory())
 
     val carsList = viewModel.cars.collectAsState().value
@@ -70,7 +72,7 @@ fun CarsScreen() {
             contentPadding = PaddingValues(16.dp)
         ) {
             items(carsList.size) { index ->
-                CarsItem(carsList[index])
+                CarsItem(navController, carsList[index])
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
@@ -78,7 +80,7 @@ fun CarsScreen() {
 }
 
 @Composable
-fun CarsItem(carsItem: CarItemResponse) {
+fun CarsItem(navController: NavController, carsItem: CarItemResponse) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -91,12 +93,12 @@ fun CarsItem(carsItem: CarItemResponse) {
             .height(height = 400.dp)
             .padding(5.dp)
     ) {
-        CardDetails(carsItem)
+        CardDetails(navController, carsItem)
     }
 }
 
 @Composable
-fun CardDetails(carsItem: CarItemResponse) {
+fun CardDetails(navController: NavController, carsItem: CarItemResponse) {
     Column {
         Box(
             modifier = Modifier
@@ -129,7 +131,7 @@ fun CardDetails(carsItem: CarItemResponse) {
             horizontalArrangement = Arrangement.End
         ) {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Screens.CarScreen.withArgs(carsItem.id)) },
                 colors = ButtonDefaults.buttonColors(
                     Color(0xFFFFA500) // Orange color
                 )

@@ -12,6 +12,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.preferencesDataStoreFile
 import dagger.Module
 import dagger.Provides
@@ -22,6 +23,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store")
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -37,8 +40,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthPreferences(dataStore: DataStore<Preferences>) =
-        AuthPreferences(dataStore)
+    fun provideAuthPreferences(@ApplicationContext context: Context) =
+        AuthPreferences(context)
 
 
     @Provides

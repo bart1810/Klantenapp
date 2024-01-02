@@ -17,7 +17,7 @@ class IAuthRepository(
         return try {
             val response = autoMaatApi.loginUser(loginRequest)
             Log.d("response", response.toString())
-            preferences.saveAuthToken(response.token)
+            preferences.saveToken(response.token)
             Resource.Success(Unit)
         }catch (e: IOException){
             Resource.Error("${e.message}")
@@ -27,6 +27,14 @@ class IAuthRepository(
     }
 
     override suspend fun registerUser(registerRequest: RegisterRequest): Resource<Unit> {
-        TODO("Not yet implemented")
+        return try {
+            val response = autoMaatApi.registerUser(registerRequest)
+            Log.d("response", response.toString())
+            Resource.Success(Unit)
+        }catch (e: IOException){
+            Resource.Error("${e.message}")
+        }catch (e: HttpException){
+            Resource.Error("${e.message}")
+        }
     }
 }

@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import android.compose.R
-import android.compose.common.bottombar.BottomNavGraph
-import android.compose.common.bottombar.BottomNavigationItem
+import android.compose.common.nav.Navigation
+import android.compose.common.nav.BottomNavigationItem
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Badge
@@ -37,6 +37,7 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    Navigation(navController = navController)
     Scaffold(
         topBar = {
                  CenterAlignedTopAppBar(
@@ -53,7 +54,7 @@ fun MainScreen() {
         bottomBar = { BottomBar(navController = navController) }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            BottomNavGraph(navController = navController)
+            Navigation(navController = navController)
         }
     }
 
