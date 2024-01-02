@@ -4,7 +4,6 @@ import android.compose.di.dataStore
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class AuthPreferences(private val context: Context) {
@@ -12,11 +11,14 @@ class AuthPreferences(private val context: Context) {
         private val TOKEN_KEY = stringPreferencesKey("token")
     }
 
-    fun getToken(): Flow<String?> {
-        return context.dataStore.data.map { preferences ->
-            preferences[TOKEN_KEY]
+    fun getToken(): String {
+        var token = ""
+        context.dataStore.data.map { preferences ->
+            token = preferences[TOKEN_KEY].toString()
         }
+        return token
     }
+
 
     suspend fun saveToken(token: String) {
         context.dataStore.edit { preferences ->

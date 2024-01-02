@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import android.compose.R
+import android.compose.common.Screens
 import android.compose.common.nav.Navigation
 import android.compose.common.nav.BottomNavigationItem
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Badge
@@ -37,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val bottomBar = BottomBar(navController = navController)
     Navigation(navController = navController)
     Scaffold(
         topBar = {
@@ -72,7 +75,6 @@ fun BottomBar(navController: NavHostController ) {
     val currentDestination = navBackStackEntry?.destination
     NavigationBar(
         containerColor = Color.White,
-        contentColor = Color.Transparent
     ) {
         screens.forEach { screen ->
             AddItem(screen = screen, currentDestination = currentDestination, navController = navController)
