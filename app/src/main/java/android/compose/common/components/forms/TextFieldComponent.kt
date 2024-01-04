@@ -30,7 +30,7 @@ fun TextFieldComponent(value: String, label: String, painterResource: Painter, o
             focusedIndicatorColor = Color.Transparent
         ),
         keyboardOptions = KeyboardOptions.Default,
-        value = "",
+        value = value,
         onValueChange = {
             onTextChanged(it)
         },

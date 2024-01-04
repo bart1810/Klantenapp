@@ -7,7 +7,9 @@ import android.compose.data.remote.response.LoginResponse
 import android.compose.data.remote.response.RegisterResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface AutoMaatApi {
     companion object {
@@ -23,4 +25,8 @@ interface AutoMaatApi {
     @GET("/api/cars")
     suspend fun getAllCars(): List<CarItemResponse>
 
+    @GET("/api/cars/{carId}")
+    suspend fun getCarDetails(
+        @Header("Authorization") token: String,
+        @Path("carId") carId: String): CarItemResponse
 }

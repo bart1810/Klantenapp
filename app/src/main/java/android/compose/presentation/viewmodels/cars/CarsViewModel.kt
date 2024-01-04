@@ -1,4 +1,4 @@
-package android.compose.presentation.viewmodels
+package android.compose.presentation.viewmodels.cars
 
 import android.compose.util.Resource
 import android.compose.data.repository.cars.CarsRepository

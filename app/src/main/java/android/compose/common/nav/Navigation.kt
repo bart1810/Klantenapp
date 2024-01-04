@@ -1,12 +1,12 @@
 package android.compose.common.nav
 
+import CarDetailScreen
 import android.compose.common.Screens
 import android.compose.presentation.views.screens.BookingsScreen
 import android.compose.presentation.views.screens.cars.CarsScreen
 import android.compose.presentation.views.screens.NotificationsScreen
 import android.compose.presentation.views.screens.SettingsScreen
 import android.compose.presentation.views.screens.auth.LoginScreen
-import android.compose.presentation.views.screens.cars.CarDetailScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost

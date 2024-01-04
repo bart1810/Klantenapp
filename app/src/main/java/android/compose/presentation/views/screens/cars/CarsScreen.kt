@@ -4,7 +4,7 @@ import android.compose.common.Screens
 import android.compose.util.RetrofitInstance
 import android.compose.data.repository.cars.CarsRepositoryImplementation
 import android.compose.data.remote.response.CarItemResponse
-import android.compose.presentation.viewmodels.CarsViewModel
+import android.compose.presentation.viewmodels.cars.CarsViewModel
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

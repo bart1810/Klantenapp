@@ -4,10 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import android.compose.R
-import android.compose.common.Screens
 import android.compose.common.nav.Navigation
 import android.compose.common.nav.BottomNavigationItem
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Badge

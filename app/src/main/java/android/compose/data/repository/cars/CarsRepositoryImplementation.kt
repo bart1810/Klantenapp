@@ -33,4 +33,21 @@ class CarsRepositoryImplementation(
             emit(Resource.Success(carsFromAutoMaatApi))
         }
     }
+
+    override suspend fun getCarDetails(token: String, carId: String): Flow<Resource<CarItemResponse>> = flow {
+        try {
+            emit(Resource.Loading())
+            val carDetails = autoMaatApi.getCarDetails("Bearer $token", carId)
+            emit(Resource.Success(carDetails))
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(Resource.Error("Network error: Could not load car details"))
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            emit(Resource.Error("HTTP error: Could not load car details"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error("Unknown error occurred"))
+        }
+    }
 }

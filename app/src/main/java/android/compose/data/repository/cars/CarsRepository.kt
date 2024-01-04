@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CarsRepository {
     suspend fun getCarsList(): Flow<Resource<List<CarItemResponse>>>
+    suspend fun getCarDetails(token: String, carId: String): Flow<Resource<CarItemResponse>>
 }
