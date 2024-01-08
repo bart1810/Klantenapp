@@ -77,12 +77,12 @@ class RegisterViewModel@Inject constructor(
             when(registerResult.result){
                 is Resource.Success->{
                     _eventFlow.emit(
-                        UiEvents.ToastEvent("Succes")
+                        UiEvents.SnackbarEvent("Succes")
                     )
                 }
                 is Resource.Error->{
                     _eventFlow.emit(
-                        UiEvents.ToastEvent("Failed")
+                        UiEvents.SnackbarEvent("Failed")
                     )
                 }
                 else -> {

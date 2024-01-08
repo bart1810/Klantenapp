@@ -3,7 +3,7 @@ package android.compose.common.nav
 import android.compose.R
 import android.compose.common.Screens
 
-sealed class BottomNavigationItem(
+enum class BottomNavigationItem(
     val title: String,
     val route: String,
     val selectedIcon: Int,
@@ -11,31 +11,31 @@ sealed class BottomNavigationItem(
     val hasNews: Boolean,
     val badgeCount: Int? = null,
 ) {
-    object Cars : BottomNavigationItem(
+    Cars(
         title = "Cars",
         route = Screens.CarScreen.route,
         selectedIcon = R.drawable.car_filled,
         unselectedIcon = R.drawable.car_outlined,
         hasNews = false,
-    )
+    ),
 
-    object Bookings : BottomNavigationItem(
+    Bookings(
         title = "Bookings",
         route = Screens.BookingsScreen.route,
         selectedIcon = R.drawable.book_filled,
         unselectedIcon = R.drawable.book_outlined,
         hasNews = false,
-    )
+    ),
 
-    object Notifications : BottomNavigationItem(
+    Notifications(
         title = "Notifications",
         route = Screens.NotificationsScreen.route,
         selectedIcon = R.drawable.bell_filled,
         unselectedIcon = R.drawable.bell_outlined,
         hasNews = false,
-    )
+    ),
 
-    object Settings : BottomNavigationItem(
+    Settings(
         title = "Settings",
         route = Screens.SettingsScreen.route,
         selectedIcon = R.drawable.settings_filled,

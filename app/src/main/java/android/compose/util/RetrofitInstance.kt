@@ -17,9 +17,9 @@ object RetrofitInstance {
         .build()
 
     val autoMaatApi: AutoMaatApi = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(AutoMaatApi.BASE_URL)
         .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(AutoMaatApi::class.java)
 }

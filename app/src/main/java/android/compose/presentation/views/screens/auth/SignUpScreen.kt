@@ -22,8 +22,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,21 +62,23 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             TextFieldComponent(
-                value = usernameState.text,
+                state = usernameState,
                 label = stringResource(id = R.string.username), painterResource = painterResource(
                 id = R.drawable.account_circle
-            ), onTextChanged = { registerViewModel.setUsername(it) })
+            )
+            ) { registerViewModel.setUsername(it) }
 
             TextFieldComponent(
-                value = emailState.text,
+                state = emailState,
                 label = stringResource(id = R.string.email), painterResource = painterResource(
-                id = R.drawable.email), onTextChanged = { registerViewModel.setEmail(it) })
+                id = R.drawable.email)
+            ) { registerViewModel.setEmail(it) }
 
-            PasswordComponent(value = passwordState.text, label = stringResource(id = R.string.password), painterResource = painterResource(
+            PasswordComponent(state = passwordState, label = stringResource(id = R.string.password), painterResource = painterResource(
                 id = R.drawable.lock), onTextChanged = { registerViewModel.setPassword(it) })
             Spacer(modifier = Modifier.height(30.dp))
 
-            PasswordComponent(value = confirmPasswordState.text, label = stringResource(id = R.string.confirm_password), painterResource = painterResource(
+            PasswordComponent(state = confirmPasswordState, label = stringResource(id = R.string.confirm_password), painterResource = painterResource(
                 id = R.drawable.lock), onTextChanged = { registerViewModel.setConfirmPassword(it) })
             Spacer(modifier = Modifier.height(30.dp))
 

@@ -1,9 +1,9 @@
 package android.compose.presentation.views.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import android.compose.R
+import android.compose.common.Screens
 import android.compose.common.nav.Navigation
 import android.compose.common.nav.BottomNavigationItem
 import androidx.compose.foundation.layout.Box
@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -28,17 +29,19 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val bottomBar = BottomBar(navController = navController)
     Navigation(navController = navController)
+    val bottomBarTabs = BottomNavigationItem.entries.toTypedArray()
+    val bottomBarRoutes = bottomBarTabs.map { it.route }
+
     Scaffold(
         topBar = {
                  CenterAlignedTopAppBar(
@@ -52,13 +55,16 @@ fun MainScreen() {
                      }
                  )
         },
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = {
+            if (navController.currentBackStackEntryAsState().value?.destination?.route in bottomBarRoutes) {
+                BottomBar(navController = navController)
+            }
+        }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Navigation(navController = navController)
         }
     }
-
 }
 
 @Composable
@@ -79,7 +85,6 @@ fun BottomBar(navController: NavHostController ) {
         }
     }
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RowScope.AddItem(
@@ -102,10 +107,10 @@ fun RowScope.AddItem(
                 }) {
                 Icon(
                     imageVector = if (currentDestination?.hierarchy?.any {
-                        it.route == screen.route
-                    } == true)
-                        {ImageVector.vectorResource(id = screen.selectedIcon)}
-                        else ImageVector.vectorResource(id = screen.unselectedIcon),
+                            it.route == screen.route
+                        } == true) {
+                        ImageVector.vectorResource(id = screen.selectedIcon)
+                    } else ImageVector.vectorResource(id = screen.unselectedIcon),
                     contentDescription = screen.title)
             }
         },
@@ -113,7 +118,10 @@ fun RowScope.AddItem(
             it.route == screen.route
         } == true,
         onClick = {
-            navController.navigate(screen.route)
+            navController.navigate(screen.route) {
+                popUpTo(navController.graph.findStartDestination().id)
+                launchSingleTop = true
+            }
         }
     )
 }

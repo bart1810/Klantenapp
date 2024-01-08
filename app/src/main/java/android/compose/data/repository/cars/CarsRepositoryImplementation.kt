@@ -3,6 +3,7 @@ package android.compose.data.repository.cars
 import android.compose.util.Resource
 import android.compose.data.remote.AutoMaatApi
 import android.compose.data.remote.response.CarItemResponse
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -38,6 +39,7 @@ class CarsRepositoryImplementation(
         try {
             emit(Resource.Loading())
             val carDetails = autoMaatApi.getCarDetails("Bearer $token", carId)
+            Log.d("carDetails", carDetails.toString())
             emit(Resource.Success(carDetails))
         } catch (e: IOException) {
             e.printStackTrace()

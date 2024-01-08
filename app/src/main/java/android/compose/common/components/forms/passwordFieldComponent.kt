@@ -1,12 +1,14 @@
 package android.compose.common.components.forms
 
 import android.compose.R
+import android.compose.presentation.viewmodels.states.TextFieldState
 import android.compose.ui.theme.LightGray
 import android.compose.ui.theme.White
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -25,10 +27,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PasswordComponent(value: String, label: String, painterResource: Painter, onTextChanged: (String) -> Unit) {
+fun PasswordComponent(state: TextFieldState, label: String, painterResource: Painter, onTextChanged: (String) -> Unit) {
     val passwordVisible = remember {
         mutableStateOf(false)
     }
@@ -44,10 +47,11 @@ fun PasswordComponent(value: String, label: String, painterResource: Painter, on
             focusedIndicatorColor = Color.Transparent
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        value = value,
+        value = state.text,
         onValueChange = {
             onTextChanged(it)
         },
+        isError = state.error != null,
         leadingIcon = { Icon(painter = painterResource, contentDescription = "") },
         trailingIcon = {
             val iconImage = if (passwordVisible.value) {
@@ -64,6 +68,14 @@ fun PasswordComponent(value: String, label: String, painterResource: Painter, on
         },
         visualTransformation = if (passwordVisible.value) VisualTransformation.None
             else PasswordVisualTransformation()
-
     )
+    if (state.error != "") {
+        androidx.compose.material.Text(
+            text = state.error ?: "",
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.error,
+            textAlign = TextAlign.End,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }
