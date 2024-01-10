@@ -1,7 +1,9 @@
-package android.compose.presentation.viewmodels.cars
+package android.compose.presentation.viewmodels.account
 
 import android.compose.data.local.AuthPreferences
+import android.compose.data.remote.response.AccountResponse
 import android.compose.data.remote.response.CarItemResponse
+import android.compose.data.repository.account.AccountRepository
 import android.compose.data.repository.cars.CarsRepository
 import android.compose.util.Resource
 import android.util.Log
@@ -16,24 +18,23 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 
-class CarDetailViewModel(
-    private val carsRepository: CarsRepository,
+class AccountViewModel(
+    private val accountRepository: AccountRepository,
     private val authPreferences: AuthPreferences
 ): ViewModel() {
 
-    private val _carDetails = MutableStateFlow<Resource<CarItemResponse>?>(null)
-    val carDetails = _carDetails.asStateFlow()
+    private val _accountResponse = MutableStateFlow<Resource<AccountResponse>?>(null)
+    val accountResponse = _accountResponse.asStateFlow()
 
-    fun fetchCarDetails(carId: String) {
+    fun fetAccount() {
         viewModelScope.launch {
             val token = authPreferences.getTokenFlow().firstOrNull()
             if (!token.isNullOrBlank()) {
-                carsRepository.getCarDetails("$token", carId).collectLatest { result ->
-                    _carDetails.value = result
-                    Log.d("carDetails", result.data.toString())
+                accountRepository.getAccount("$token").collectLatest { result ->
+                    _accountResponse.value = result
                 }
             } else {
-                _carDetails.value = Resource.Error("Authorization token is missing")
+                _accountResponse.value = Resource.Error("Authorization token is missing")
             }
         }
     }

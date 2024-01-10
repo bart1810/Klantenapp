@@ -3,29 +3,24 @@ package android.compose.data.remote
 import android.compose.data.remote.response.CarItemResponse
 import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
+import android.compose.data.remote.response.AccountResponse
 import android.compose.data.remote.response.LoginResponse
 import android.compose.data.remote.response.RegisterResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface AutoMaatApi {
     companion object {
-        const val BASE_URL = "https://4c10-2001-1c01-4705-3a00-75c3-16ed-b7da-5f56.ngrok-free.app"
+        const val BASE_URL = "https://5db3-145-33-101-69.ngrok-free.app"
     }
 
     @POST("/api/authenticate")
     suspend fun loginUser(@Body loginRequest: LoginRequest): LoginResponse
-    @GET("/api/authenticate")
-    @Headers(
-        "Accept: */*"
-    )
-    suspend fun authenticateUser(@Header("Authorization") token: String): String
 
-    @POST("/api/register")
+    @POST("/api/AM/register")
     suspend fun registerUser(@Body registerRequest: RegisterRequest): RegisterResponse
 
     @GET("/api/cars")
@@ -35,4 +30,7 @@ interface AutoMaatApi {
     suspend fun getCarDetails(
         @Header("Authorization") token: String,
         @Path("carId") carId: String): CarItemResponse
+
+    @GET("/api/AM/account")
+    suspend fun getAccount(@Header("Authorization") token: String): AccountResponse
 }
