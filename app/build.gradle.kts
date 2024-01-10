@@ -109,4 +109,7 @@ dependencies {
 
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Notifications
+    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
 }
