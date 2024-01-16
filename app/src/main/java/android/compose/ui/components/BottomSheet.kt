@@ -37,11 +37,14 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(
-    onApplyFilter: (List<String>) -> Unit
+    selectedBrandFilters: List<String>,
+    selectedFuelFilters: List<String>,
+    selectedBodyFilters: List<String>,
+    onApplyFilter: (List<String>, List<String>, List<String>) -> Unit
 ) {
-
     var openBottomSheet by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
@@ -67,12 +70,17 @@ fun BottomSheet(
             }
         ) {
             BottomSheetContent(
+                selectedBrandFilters = selectedBrandFilters,
+                selectedFuelFilters = selectedFuelFilters,
+                selectedBodyFilters = selectedBodyFilters,
                 onHideButtonClick = {
                     scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
                         if (!bottomSheetState.isVisible) openBottomSheet = false
                     }
                 },
-                onApplyFilter = onApplyFilter
+                onApplyFilter = { selectedBrands, selectedFuels, selectedBodies ->
+                    onApplyFilter(selectedBrands, selectedFuels, selectedBodies)
+                }
             )
         }
     }
@@ -81,20 +89,35 @@ fun BottomSheet(
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun BottomSheetContent(
+    selectedBrandFilters: List<String>,
+    selectedFuelFilters: List<String>,
+    selectedBodyFilters: List<String>,
     onHideButtonClick: () -> Unit,
-    onApplyFilter: (List<String>) -> Unit
+    onApplyFilter: (List<String>, List<String>, List<String>) -> Unit
 ) {
-    var selectedFilters by remember { mutableStateOf(mutableListOf<String>()) }
+    var selectedBrands by remember { mutableStateOf(selectedBrandFilters) }
+    var selectedFuels by remember { mutableStateOf(selectedFuelFilters) }
+    var selectedBodies by remember { mutableStateOf(selectedBodyFilters) }
 
-
-    fun handleSelection(filter: String) {
-        selectedFilters = if (selectedFilters.contains(filter)) {
-            selectedFilters.filter { it != filter }.toMutableList()
+    fun <T> updateFilterList(currentList: List<T>, filter: T): List<T> {
+        return if (currentList.contains(filter)) {
+            currentList.filter { it != filter }
         } else {
-            (selectedFilters + filter).toMutableList()
+            currentList + filter
         }
     }
 
+    fun handleBrandSelection(brand: String) {
+        selectedBrands = updateFilterList(selectedBrands, brand)
+    }
+
+    fun handleFuelTypeSelection(fuelType: String) {
+        selectedFuels = updateFilterList(selectedFuels, fuelType)
+    }
+
+    fun handleBodyTypeSelection(bodyType: String) {
+        selectedBodies = updateFilterList(selectedBodies, bodyType)
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -113,29 +136,14 @@ fun BottomSheetContent(
                 .width(320.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            FilterAssistChip("Audi", R.drawable.audi_logo_icon, selectedFilters.contains("Audi")) {
-                handleSelection("Audi")
+            FilterAssistChip("Audi", R.drawable.audi_logo_icon, selectedBrands.contains("Audi")) {
+                handleBrandSelection("Audi")
             }
-            FilterAssistChip("BMW", R.drawable.bmw_logo_icon, selectedFilters.contains("BMW")) {
-                handleSelection("BMW")
+            FilterAssistChip("BMW", R.drawable.bmw_logo_icon, selectedBrands.contains("BMW")) {
+                handleBrandSelection("BMW")
             }
-            FilterAssistChip("Ford", R.drawable.ford_logo_icon, selectedFilters.contains("Ford")) {
-                handleSelection("Ford")
-            }
-        }
-        Row(
-            modifier = Modifier
-                .width(320.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            FilterAssistChip("Honda", R.drawable.honda_logo_icon, selectedFilters.contains("Honda")) {
-                handleSelection("Honda")
-            }
-            FilterAssistChip("Hyundai", R.drawable.hyundai_logo_icon, selectedFilters.contains("Hyundai")) {
-                handleSelection("Hyundai")
-            }
-            FilterAssistChip("Jeep", R.drawable.jeep_logo_icon, selectedFilters.contains("Jeep")) {
-                handleSelection("Jeep")
+            FilterAssistChip("Ford", R.drawable.ford_logo_icon, selectedBrands.contains("Ford")) {
+                handleBrandSelection("Ford")
             }
         }
         Row(
@@ -143,14 +151,14 @@ fun BottomSheetContent(
                 .width(320.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            FilterAssistChip("Nissan", R.drawable.nissan_logo_icon, selectedFilters.contains("Nissan")) {
-                handleSelection("Nissan")
+            FilterAssistChip("Honda", R.drawable.honda_logo_icon, selectedBrands.contains("Honda")) {
+                handleBrandSelection("Honda")
             }
-            FilterAssistChip("Subaru", R.drawable.subaru_logo_icon, selectedFilters.contains("Subaru")) {
-                handleSelection("Subaru")
+            FilterAssistChip("Hyundai", R.drawable.hyundai_logo_icon, selectedBrands.contains("Hyundai")) {
+                handleBrandSelection("Hyundai")
             }
-            FilterAssistChip("Toyota", R.drawable.toyota_logo_icon, selectedFilters.contains("Toyota")) {
-                handleSelection("Toyota")
+            FilterAssistChip("Jeep", R.drawable.jeep_logo_icon, selectedBrands.contains("Jeep")) {
+                handleBrandSelection("Jeep")
             }
         }
         Row(
@@ -158,11 +166,26 @@ fun BottomSheetContent(
                 .width(320.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            FilterAssistChip("Mercedes-Benz", R.drawable.mbenz_logo_icon, selectedFilters.contains("Mercedes-Benz")) {
-                handleSelection("Mercedes-Benz")
+            FilterAssistChip("Nissan", R.drawable.nissan_logo_icon, selectedBrands.contains("Nissan")) {
+                handleBrandSelection("Nissan")
             }
-            FilterAssistChip("Chevrolet", R.drawable.chevrolet_logo_icon, selectedFilters.contains("Chevrolet")) {
-                handleSelection("Chevrolet")
+            FilterAssistChip("Subaru", R.drawable.subaru_logo_icon, selectedBrands.contains("Subaru")) {
+                handleBrandSelection("Subaru")
+            }
+            FilterAssistChip("Toyota", R.drawable.toyota_logo_icon, selectedBrands.contains("Toyota")) {
+                handleBrandSelection("Toyota")
+            }
+        }
+        Row(
+            modifier = Modifier
+                .width(320.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            FilterAssistChip("Mercedes-Benz", R.drawable.mbenz_logo_icon, selectedBrands.contains("Mercedes-Benz")) {
+                handleBrandSelection("Mercedes-Benz")
+            }
+            FilterAssistChip("Chevrolet", R.drawable.chevrolet_logo_icon, selectedBrands.contains("Chevrolet")) {
+                handleBrandSelection("Chevrolet")
             }
         }
 
@@ -179,11 +202,11 @@ fun BottomSheetContent(
                 .width(270.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            FilterAssistChip("Gasoline", R.drawable.gasoline_icon, selectedFilters.contains("Gasoline")) {
-                handleSelection("Gasoline")
+            FilterAssistChip("Gasoline", R.drawable.gasoline_icon, selectedFuels.contains("Gasoline")) {
+                handleFuelTypeSelection("Gasoline")
             }
-            FilterAssistChip("Diesel", R.drawable.diesel_icon, selectedFilters.contains("Diesel")) {
-                handleSelection("Diesel")
+            FilterAssistChip("Diesel", R.drawable.diesel_icon, selectedFuels.contains("Diesel")) {
+                handleFuelTypeSelection("Diesel")
             }
         }
         Row(
@@ -191,11 +214,11 @@ fun BottomSheetContent(
                 .width(270.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            FilterAssistChip("Electric", R.drawable.electric_icon, selectedFilters.contains("Electric")) {
-                handleSelection("Electric")
+            FilterAssistChip("Electric", R.drawable.electric_icon, selectedFuels.contains("Electric")) {
+                handleFuelTypeSelection("Electric")
             }
-            FilterAssistChip("Hybrid", R.drawable.hybrid_icon, selectedFilters.contains("Hybrid")) {
-                handleSelection("Hybrid")
+            FilterAssistChip("Hybrid", R.drawable.hybrid_icon, selectedFuels.contains("Hybrid")) {
+                handleFuelTypeSelection("Hybrid")
             }
         }
 
@@ -212,14 +235,14 @@ fun BottomSheetContent(
                 .width(330.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            FilterAssistChip("SUV", R.drawable.suv_icon, selectedFilters.contains("SUV")) {
-                handleSelection("SUV")
+            FilterAssistChip("SUV", R.drawable.suv_icon, selectedBodies.contains("SUV")) {
+                handleBodyTypeSelection("SUV")
             }
-            FilterAssistChip("Sedan", R.drawable.sedan_icon, selectedFilters.contains("Sedan")) {
-                handleSelection("Sedan")
+            FilterAssistChip("Sedan", R.drawable.sedan_icon, selectedBodies.contains("Sedan")) {
+                handleBodyTypeSelection("Sedan")
             }
-            FilterAssistChip("PickupTruck", R.drawable.pickuptruck_icon, selectedFilters.contains("PickupTruck")) {
-                handleSelection("PickupTruck")
+            FilterAssistChip("PickupTruck", R.drawable.pickuptruck_icon, selectedBodies.contains("PickupTruck")) {
+                handleBodyTypeSelection("PickupTruck")
             }
         }
         Row(
@@ -227,11 +250,11 @@ fun BottomSheetContent(
                 .width(330.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            FilterAssistChip("Hatchback", R.drawable.hatchback_icon, selectedFilters.contains("Hatchback")) {
-                handleSelection("Hatchback")
+            FilterAssistChip("Hatchback", R.drawable.hatchback_icon, selectedBodies.contains("Hatchback")) {
+                handleBodyTypeSelection("Hatchback")
             }
-            FilterAssistChip("Station wagon", R.drawable.stationwagon_icon, selectedFilters.contains("Station_wagon")) {
-                handleSelection("Station_wagon")
+            FilterAssistChip("Station wagon", R.drawable.stationwagon_icon, selectedBodies.contains("Station_wagon")) {
+                handleBodyTypeSelection("Station_wagon")
             }
         }
 
@@ -240,7 +263,7 @@ fun BottomSheetContent(
         Button(
             modifier = Modifier.width(250.dp),
             onClick = {
-                onApplyFilter(selectedFilters)
+                onApplyFilter(selectedBrands, selectedFuels, selectedBodies)
                 onHideButtonClick() }
         ) {
             Text(text = "Apply")

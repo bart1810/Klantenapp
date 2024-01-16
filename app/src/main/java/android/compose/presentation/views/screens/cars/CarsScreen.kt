@@ -5,6 +5,8 @@ import android.compose.util.RetrofitInstance
 import android.compose.data.repository.cars.CarsRepositoryImplementation
 import android.compose.data.remote.response.CarItemResponse
 import android.compose.presentation.viewmodels.cars.CarsViewModel
+import android.compose.ui.components.BottomSheet
+import android.compose.ui.components.ToastMessage
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,35 +47,65 @@ import kotlinx.coroutines.flow.collectLatest
 fun CarsScreen(navController: NavController) {
     val viewModel: CarsViewModel = viewModel(factory = CarsViewModelFactory())
 
-    val carsList = viewModel.cars.collectAsState().value
+    val selectedBrandFilters = viewModel.selectedBrandFilters.collectAsState().value
+    val selectedFuelFilters = viewModel.selectedFuelTypes.collectAsState().value
+    val selectedBodyFilters = viewModel.selectedBodyTypes.collectAsState().value
+
+    val noCarsFound = viewModel.noCarsFound.collectAsState().value
+    val carsList = if (noCarsFound) viewModel.allCars.collectAsState().value else viewModel.cars.collectAsState().value
+
     val context = LocalContext.current
 
     LaunchedEffect(key1 = viewModel.showErrorToastChannel) {
-        viewModel.showErrorToastChannel.collectLatest { show ->
-            if (show) {
-                Toast.makeText(
-                    context, "Error", Toast.LENGTH_SHORT
-                ).show()
+        viewModel.showErrorToastChannel.collectLatest { toastMessage ->
+            when (toastMessage) {
+                ToastMessage.GenericError -> {
+                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                }
+                ToastMessage.NoCarsFound -> {
+                    Toast.makeText(context, "No cars found with the selected filters", Toast.LENGTH_LONG).show()
+                    viewModel.resetFilters()
+                }
             }
         }
     }
 
-    if (carsList.isEmpty()) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    } else {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(16.dp)
-        ) {
-            items(carsList.size) { index ->
-                CarsItem(navController, carsList[index])
-                Spacer(modifier = Modifier.height(16.dp))
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+        if (carsList.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+
+            BottomSheet(
+                selectedBrandFilters = selectedBrandFilters,
+                selectedFuelFilters = selectedFuelFilters,
+                selectedBodyFilters = selectedBodyFilters,
+                onApplyFilter = { brands, fuels, bodies ->
+                    viewModel.updateBrandFilters(brands)
+                    viewModel.updateFuelFilters(fuels)
+                    viewModel.updateBodyFilters(bodies)
+                    viewModel.applyFilters()
+                }
+            )
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(16.dp)
+            ) {
+                items(carsList.size) { index ->
+                    CarsItem(navController, carsList[index])
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }
@@ -141,7 +173,6 @@ fun CardDetails(navController: NavController, carsItem: CarItemResponse) {
         }
     }
 }
-
 
 class CarsViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

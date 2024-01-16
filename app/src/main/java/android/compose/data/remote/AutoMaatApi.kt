@@ -14,7 +14,7 @@ import retrofit2.http.Path
 
 interface AutoMaatApi {
     companion object {
-        const val BASE_URL = "https://5db3-145-33-101-69.ngrok-free.app"
+        const val BASE_URL = "https://dear-snapper-highly.ngrok-free.app"
     }
 
     @POST("/api/authenticate")
