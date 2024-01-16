@@ -30,7 +30,6 @@ class CarDetailViewModel(
             if (!token.isNullOrBlank()) {
                 carsRepository.getCarDetails("$token", carId).collectLatest { result ->
                     _carDetails.value = result
-                    Log.d("carDetails", result.data.toString())
                 }
             } else {
                 _carDetails.value = Resource.Error("Authorization token is missing")
