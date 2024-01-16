@@ -1,27 +1,31 @@
 package android.compose.presentation.viewmodels.auth
 
 import android.compose.common.UiEvents
+import android.compose.data.remote.request.RegisterRequest
+import android.compose.data.remote.response.RegisterResponse
+import android.compose.data.repository.auth.AuthRepository
 import android.compose.util.Resource
 import androidx.lifecycle.ViewModel
-import android.compose.domain.use_cases.RegisterUseCase
-import android.compose.presentation.viewmodels.states.AuthState
 import android.compose.presentation.viewmodels.states.TextFieldState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel@Inject constructor(
-    private val registerUseCase: RegisterUseCase,
+    private val authRepository: AuthRepository,
 ): ViewModel() {
 
-    private var _registerState = mutableStateOf(AuthState())
-    val registerState: State<AuthState> = _registerState
+    private val _registerState = MutableStateFlow<Resource<RegisterResponse>?>(null)
+    private val registerState = _registerState.asStateFlow()
 
     private val _usernameState = mutableStateOf(TextFieldState())
     val usernameState: State<TextFieldState> = _usernameState
@@ -56,37 +60,31 @@ class RegisterViewModel@Inject constructor(
 
     fun registerUser(){
         viewModelScope.launch {
-            _registerState.value = registerState.value.copy(isLoading = false)
-
-            val registerResult = registerUseCase(
+            val registerRequest = RegisterRequest (
                 username = usernameState.value.text,
-                email = emailState.value.text,
                 password = passwordState.value.text,
-                confirmPassword = confirmPasswordState.value.text,
+                email = emailState.value.text,
+                langKey = "nl"
             )
 
-            _registerState.value = registerState.value.copy(isLoading = false)
-
-            if (registerResult.usernameError != null){
-                _usernameState.value=usernameState.value.copy(error = registerResult.usernameError)
-            }
-            if (registerResult.passwordError != null){
-                _passwordState.value = passwordState.value.copy(error = registerResult.passwordError)
+            authRepository.registerUser(registerRequest).collectLatest { result ->
+                _registerState.value = result
             }
 
-            when(registerResult.result){
+            when(registerState.value){
                 is Resource.Success->{
                     _eventFlow.emit(
-                        UiEvents.SnackbarEvent("Succes")
+                        UiEvents.NavigateEvent(
+                            registerState.value?.message ?: "Success!"
+                        )
                     )
                 }
                 is Resource.Error->{
-                    _eventFlow.emit(
-                        UiEvents.SnackbarEvent("Failed")
+                    UiEvents.SnackbarEvent(
+                        registerState.value?.message ?: "Error!"
                     )
                 }
                 else -> {
-
                 }
             }
         }

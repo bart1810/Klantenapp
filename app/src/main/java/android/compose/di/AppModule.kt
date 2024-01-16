@@ -5,8 +5,6 @@ import android.compose.data.remote.AutoMaatApi.Companion.BASE_URL
 import android.compose.data.repository.auth.AuthRepository
 import android.compose.data.repository.auth.IAuthRepository
 import android.compose.data.local.AuthPreferences
-import android.compose.domain.use_cases.LoginUseCase
-import android.compose.domain.use_cases.RegisterUseCase
 import android.compose.util.Constants.AUTH_PREFERENCES
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -64,18 +62,5 @@ object AppModule {
             autoMaatApi = apiService,
             preferences = preferences
         )
-    }
-
-    @Provides
-    @Singleton
-    fun providesLoginUseCase(repository: AuthRepository): LoginUseCase {
-        return LoginUseCase(repository)
-    }
-
-
-    @Provides
-    @Singleton
-    fun providesRegisterUseCase(repository: AuthRepository): RegisterUseCase {
-        return RegisterUseCase(repository)
     }
 }
