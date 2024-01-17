@@ -202,11 +202,11 @@ fun BottomSheetContent(
                 .width(270.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            FilterAssistChip("Gasoline", R.drawable.gasoline_icon, selectedFuels.contains("Gasoline")) {
-                handleFuelTypeSelection("Gasoline")
+            FilterAssistChip("Gasoline", R.drawable.gasoline_icon, selectedFuels.contains("GASOLINE")) {
+                handleFuelTypeSelection("GASOLINE")
             }
-            FilterAssistChip("Diesel", R.drawable.diesel_icon, selectedFuels.contains("Diesel")) {
-                handleFuelTypeSelection("Diesel")
+            FilterAssistChip("Diesel", R.drawable.diesel_icon, selectedFuels.contains("DIESEL")) {
+                handleFuelTypeSelection("DIESEL")
             }
         }
         Row(
@@ -214,11 +214,11 @@ fun BottomSheetContent(
                 .width(270.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            FilterAssistChip("Electric", R.drawable.electric_icon, selectedFuels.contains("Electric")) {
-                handleFuelTypeSelection("Electric")
+            FilterAssistChip("Electric", R.drawable.electric_icon, selectedFuels.contains("ELECTRIC")) {
+                handleFuelTypeSelection("ELECTRIC")
             }
-            FilterAssistChip("Hybrid", R.drawable.hybrid_icon, selectedFuels.contains("Hybrid")) {
-                handleFuelTypeSelection("Hybrid")
+            FilterAssistChip("Hybrid", R.drawable.hybrid_icon, selectedFuels.contains("HYBRID")) {
+                handleFuelTypeSelection("HYBRID")
             }
         }
 
@@ -238,11 +238,11 @@ fun BottomSheetContent(
             FilterAssistChip("SUV", R.drawable.suv_icon, selectedBodies.contains("SUV")) {
                 handleBodyTypeSelection("SUV")
             }
-            FilterAssistChip("Sedan", R.drawable.sedan_icon, selectedBodies.contains("Sedan")) {
-                handleBodyTypeSelection("Sedan")
+            FilterAssistChip("Sedan", R.drawable.sedan_icon, selectedBodies.contains("SEDAN")) {
+                handleBodyTypeSelection("SEDAN")
             }
-            FilterAssistChip("PickupTruck", R.drawable.pickuptruck_icon, selectedBodies.contains("PickupTruck")) {
-                handleBodyTypeSelection("PickupTruck")
+            FilterAssistChip("PickupTruck", R.drawable.pickuptruck_icon, selectedBodies.contains("TRUCK")) {
+                handleBodyTypeSelection("TRUCK")
             }
         }
         Row(
@@ -250,11 +250,11 @@ fun BottomSheetContent(
                 .width(330.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            FilterAssistChip("Hatchback", R.drawable.hatchback_icon, selectedBodies.contains("Hatchback")) {
-                handleBodyTypeSelection("Hatchback")
+            FilterAssistChip("Hatchback", R.drawable.hatchback_icon, selectedBodies.contains("HATCHBACK")) {
+                handleBodyTypeSelection("HATCHBACK")
             }
-            FilterAssistChip("Station wagon", R.drawable.stationwagon_icon, selectedBodies.contains("Station_wagon")) {
-                handleBodyTypeSelection("Station_wagon")
+            FilterAssistChip("Station wagon", R.drawable.stationwagon_icon, selectedBodies.contains("STATIONWAGON")) {
+                handleBodyTypeSelection("STATIONWAGON")
             }
         }
 
