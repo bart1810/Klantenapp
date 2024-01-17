@@ -7,7 +7,6 @@ import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
 import android.compose.data.remote.response.LoginResponse
 import android.compose.data.remote.response.RegisterResponse
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

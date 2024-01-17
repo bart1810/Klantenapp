@@ -4,6 +4,7 @@ import android.compose.data.remote.response.CarItemResponse
 import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
 import android.compose.data.remote.response.AccountResponse
+import android.compose.data.remote.response.CustomerResponse
 import android.compose.data.remote.response.LoginResponse
 import android.compose.data.remote.response.RegisterResponse
 import retrofit2.http.Body
@@ -14,7 +15,7 @@ import retrofit2.http.Path
 
 interface AutoMaatApi {
     companion object {
-        const val BASE_URL = "https://dear-snapper-highly.ngrok-free.app"
+        const val BASE_URL = "https://707a-145-33-101-69.ngrok-free.app"
     }
 
     @POST("/api/authenticate")
@@ -33,4 +34,8 @@ interface AutoMaatApi {
 
     @GET("/api/AM/account")
     suspend fun getAccount(@Header("Authorization") token: String): AccountResponse
+
+    @GET("/api/customers/{customerId}")
+    suspend fun getCustomerDetails(
+        @Header("Authorization") token: String, @Path("customerId") customerId: String): CustomerResponse
 }

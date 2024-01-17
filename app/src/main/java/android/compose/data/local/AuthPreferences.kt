@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 class AuthPreferences(private val context: Context) {
     companion object {
         private val TOKEN_KEY = stringPreferencesKey("token")
-        private val ACCOUNT_ID = intPreferencesKey("accountId")
+        private val ACCOUNT_ID = stringPreferencesKey("accountId")
     }
 
     fun getToken(): String {
@@ -27,13 +27,13 @@ class AuthPreferences(private val context: Context) {
             preferences[TOKEN_KEY]
         }
 
-    suspend fun saveAccountId(id: Int) {
+    suspend fun saveAccountId(id: String) {
         context.dataStore.edit { preferences ->
             preferences[ACCOUNT_ID] = id
         }
     }
 
-    fun getAccountIdFlow(): Flow<Int?> = context.dataStore.data
+    fun getAccountIdFlow(): Flow<String?> = context.dataStore.data
         .map { preferences ->
             preferences[ACCOUNT_ID]
         }

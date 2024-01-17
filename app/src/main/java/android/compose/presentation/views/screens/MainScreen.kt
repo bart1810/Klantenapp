@@ -3,16 +3,18 @@ package android.compose.presentation.views.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import android.compose.R
-import android.compose.common.Screens
 import android.compose.common.nav.Navigation
 import android.compose.common.nav.BottomNavigationItem
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -21,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -52,6 +53,13 @@ fun MainScreen() {
                              fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                              fontWeight = FontWeight.Bold
                          )
+                     },
+                     navigationIcon = {
+                         if (navController.currentBackStackEntryAsState().value?.destination?.route !in bottomBarRoutes) {
+                             IconButton(onClick = { navController.navigateUp() }) {
+                                 Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                             }
+                         }
                      }
                  )
         },
@@ -73,7 +81,7 @@ fun BottomBar(navController: NavHostController ) {
         BottomNavigationItem.Cars,
         BottomNavigationItem.Bookings,
         BottomNavigationItem.Notifications,
-        BottomNavigationItem.Settings,
+        BottomNavigationItem.Profile,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

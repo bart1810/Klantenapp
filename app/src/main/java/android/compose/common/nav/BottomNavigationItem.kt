@@ -35,11 +35,11 @@ enum class BottomNavigationItem(
         hasNews = false,
     ),
 
-    Settings(
-        title = "Settings",
-        route = Screens.SettingsScreen.route,
-        selectedIcon = R.drawable.settings_filled,
-        unselectedIcon = R.drawable.settings_outlined,
+    Profile(
+        title = "Profile",
+        route = Screens.Profile.route,
+        selectedIcon = R.drawable.account_circle,
+        unselectedIcon = R.drawable.outline_account_circle_24,
         hasNews = false,
     )
 

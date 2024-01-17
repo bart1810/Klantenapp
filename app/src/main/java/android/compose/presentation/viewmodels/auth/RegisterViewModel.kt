@@ -61,10 +61,10 @@ class RegisterViewModel@Inject constructor(
     fun registerUser(){
         viewModelScope.launch {
             val registerRequest = RegisterRequest (
-                username = usernameState.value.text,
+                login = usernameState.value.text,
                 password = passwordState.value.text,
                 email = emailState.value.text,
-                langKey = "nl"
+                langKey = "en"
             )
 
             authRepository.registerUser(registerRequest).collectLatest { result ->

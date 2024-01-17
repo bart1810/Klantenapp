@@ -18,7 +18,7 @@ class IAccountRepository(
         try {
             emit(Resource.Loading())
             val accountResponse = autoMaatApi.getAccount("Bearer $token")
-            preferences.saveAccountId(accountResponse.id)
+            preferences.saveAccountId(accountResponse.id.toString())
             emit(Resource.Success(accountResponse))
         } catch (e: IOException) {
             e.printStackTrace()

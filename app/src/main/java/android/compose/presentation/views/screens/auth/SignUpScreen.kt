@@ -1,6 +1,7 @@
 package android.compose.presentation.views.screens.auth
 
 import android.compose.R
+import android.compose.common.Screens
 import android.compose.common.components.forms.PasswordComponent
 import android.compose.common.components.forms.TextFieldComponent
 import android.compose.common.components.text.TextComponent
@@ -30,14 +31,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 
 @Composable
-fun SignUpScreen(
-    registerViewModel: RegisterViewModel = hiltViewModel()
+fun SignUpScreen(navController: NavController,
+                 registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
 
     val usernameState = registerViewModel.usernameState.value
@@ -104,7 +105,7 @@ fun SignUpScreen(
             verticalAlignment = Alignment.Bottom
         ) {
             TextButton(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Screens.LoginScreen.route) },
             ) {
                 Text(
                     text = stringResource(R.string.has_account),
@@ -129,11 +130,4 @@ fun SignUpScreen(
             }
         }
     }
-}
-
-
-@Composable
-@Preview
-fun SignUpPreview() {
-    SignUpScreen()
 }

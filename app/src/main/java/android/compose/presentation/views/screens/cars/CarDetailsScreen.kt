@@ -51,10 +51,6 @@ fun CarDetailScreen(navController: NavController, carId: String?) {
     val carDetailsState = carDetailViewModel.carDetails.collectAsState().value
 
     Column(modifier = Modifier.fillMaxSize().padding(5.dp)) {
-        IconButton(onClick = { navController.navigateUp() }) {
-            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-        }
-
         when (carDetailsState) {
             is Resource.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -117,7 +113,7 @@ fun TableLayout(carDetails: CarItemResponse) {
         }
         Row(modifier = Modifier.padding(8.dp)) {
             Text("Benzine type: ", fontWeight = FontWeight.Bold)
-            Text("${carDetails.fuel}")
+            Text(carDetails.fuel)
         }
         Row(modifier = Modifier.padding(8.dp)) {
             Text("Model jaar: ", fontWeight = FontWeight.Bold)

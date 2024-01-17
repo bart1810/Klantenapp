@@ -1,14 +1,14 @@
 package android.compose.common
 
 sealed class Screens(val route: String) {
-    object CarScreen : Screens("cars")
-    object BookingsScreen : Screens("bookings")
-    object NotificationsScreen : Screens("notifications")
-    object SettingsScreen : Screens("settings")
-    object LoginScreen : Screens("login")
-    object DamageFormScreen : Screens("damageForm")
-    object FaqScreen : Screens("faq")
-    object SignUpScreen : Screens("register")
+    data object CarScreen : Screens("cars")
+    data object BookingsScreen : Screens("bookings")
+    data object NotificationsScreen : Screens("notifications")
+    data object Profile : Screens("profile")
+    data object LoginScreen : Screens("login")
+    data object DamageFormScreen : Screens("damageForm")
+    data object FaqScreen : Screens("faq")
+    data object RegisterScreen : Screens("register")
 
     fun withArgs(vararg args: Int): String {
         return buildString {

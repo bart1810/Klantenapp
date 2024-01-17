@@ -103,9 +103,6 @@ fun LoginScreen(navController: NavController,
                     .fillMaxSize()
                     .background(Color.White)
             ) {
-                IconButton(onClick = { navController.navigateUp() }) {
-                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-                }
                 Spacer(modifier = Modifier.height(150.dp))
                 TextComponent(text = stringResource(id = R.string.login), fontSize = 30, fontWeight = FontWeight.Bold)
                 TextComponent(text = stringResource(id = R.string.loginSubText), fontSize = 15, fontWeight = FontWeight.Normal, textColor = Secondary)
