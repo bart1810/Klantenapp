@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CheckboxColors
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.icons.Icons
@@ -34,6 +35,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -97,7 +99,9 @@ fun LoginScreen(navController: NavController,
     Scaffold(
         scaffoldState = scaffoldState,
     ) { innerPadding ->
-        Surface(modifier = Modifier.fillMaxSize().padding(28.dp)) {
+        Surface(modifier = Modifier
+            .fillMaxSize()
+            .padding(28.dp)) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -121,23 +125,35 @@ fun LoginScreen(navController: NavController,
 
                 Row(
                     modifier = Modifier
-                        .padding(0.dp),
+                        .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    Checkbox(checked = rememberMeState.checked, onCheckedChange = {
-                        loginViewModel.setRememberMe(!rememberMeState.checked)
-                    })
-                    Text(
-                        text = stringResource(R.string.remember_me),
-                        style = TextStyle(
-                            fontSize = 15.sp,
-                            color = TextColor
-                        ),
-                        color = TextColor,
-                        textAlign = TextAlign.Start
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Checkbox(
+                            checked = rememberMeState.checked,
+                            onCheckedChange = {
+                            loginViewModel.setRememberMe(!rememberMeState.checked)
+                            },
+                            colors = CheckboxDefaults.colors(
+                                checkedColor = Primary,
+                            )
+                            )
+                        Text(
+                            text = stringResource(R.string.remember_me),
+                            style = TextStyle(
+                                fontSize = 15.sp,
+                                color = TextColor
+                            ),
+                            color = TextColor,
+                            textAlign = TextAlign.Start
+                        )
+                    }
+
                     TextButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { navController.navigate(Screens.ForgotPasswordScreen.route) },
                     ) {
                         Text(
                             text = stringResource(R.string.forgot_password),
@@ -146,7 +162,6 @@ fun LoginScreen(navController: NavController,
                                 color = Primary,
                                 fontWeight = FontWeight.Bold
                             ),
-                            textAlign = TextAlign.End
                         )
                     }
                 }
@@ -172,7 +187,7 @@ fun LoginScreen(navController: NavController,
                 verticalAlignment = Alignment.Bottom
             ) {
                 TextButton(
-                    onClick = { },
+                    onClick = { navController.navigate(Screens.RegisterScreen.route) },
                 ) {
                     Text(
                         text = stringResource(R.string.has_no_account),

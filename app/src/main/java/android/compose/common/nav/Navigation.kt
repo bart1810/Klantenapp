@@ -7,7 +7,9 @@ import android.compose.presentation.views.screens.cars.CarsScreen
 import android.compose.presentation.views.screens.NotificationsScreen
 import android.compose.presentation.views.screens.account.DamageFormScreen
 import android.compose.presentation.views.screens.account.FaqScreen
-import android.compose.presentation.views.screens.account.SettingsScreen
+import android.compose.presentation.views.screens.account.ProfileScreen
+import android.compose.presentation.views.screens.auth.ChangePasswordScreen
+import android.compose.presentation.views.screens.auth.ForgotPasswordScreen
 import android.compose.presentation.views.screens.auth.LoginScreen
 import android.compose.presentation.views.screens.auth.SignUpScreen
 import androidx.compose.runtime.Composable
@@ -41,7 +43,7 @@ fun Navigation(navController: NavHostController) {
             NotificationsScreen(navController)
         }
         composable(route = Screens.Profile.route) {
-            SettingsScreen(navController)
+            ProfileScreen(navController)
         }
         composable(route = Screens.LoginScreen.route) {
             LoginScreen(navController)
@@ -54,6 +56,12 @@ fun Navigation(navController: NavHostController) {
         }
         composable(route = Screens.FaqScreen.route) {
             FaqScreen(navController)
+        }
+        composable(route = Screens.ForgotPasswordScreen.route) {
+            ForgotPasswordScreen(navController)
+        }
+        composable(route = Screens.ChangePasswordScreen.route) {
+            ChangePasswordScreen(navController)
         }
     }
 }
