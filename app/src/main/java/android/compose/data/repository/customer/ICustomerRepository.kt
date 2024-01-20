@@ -12,10 +12,10 @@ class ICustomerRepository(
     private val autoMaatApi: AutoMaatApi
 ): CustomerRepository {
 
-    override suspend fun getCustomer(token: String, customerId: String): Flow<Resource<CustomerResponse>> {
+    override suspend fun getCustomer(token: String): Flow<Resource<CustomerResponse>> {
         return flow {
             val customerFromApi = try {
-                autoMaatApi.getCustomerDetails("Bearer $token", customerId)
+                autoMaatApi.getCustomerDetails("Bearer $token")
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Error loading customer"))

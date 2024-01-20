@@ -23,9 +23,8 @@ class CustomerViewModel(
     fun fetCustomer() {
         viewModelScope.launch {
             val token = authPreferences.getTokenFlow().firstOrNull()
-            val customerId = authPreferences.getAccountIdFlow().firstOrNull()
-            if (!token.isNullOrBlank() && !customerId.isNullOrBlank()) {
-                customerRepository.getCustomer("$token", "$customerId").collectLatest { result ->
+            if (!token.isNullOrBlank()) {
+                customerRepository.getCustomer("$token").collectLatest { result ->
                     _customerDetails.value = result
                 }
             } else {

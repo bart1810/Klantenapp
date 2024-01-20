@@ -6,5 +6,5 @@ import android.compose.data.remote.response.CustomerResponse
 import kotlinx.coroutines.flow.Flow
 
 interface CustomerRepository {
-    suspend fun getCustomer(token: String, customerId: String): Flow<Resource<CustomerResponse>>
+    suspend fun getCustomer(token: String): Flow<Resource<CustomerResponse>>
 }

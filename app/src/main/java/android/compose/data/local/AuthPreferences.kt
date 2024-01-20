@@ -27,18 +27,6 @@ class AuthPreferences(private val context: Context) {
             preferences[TOKEN_KEY]
         }
 
-    suspend fun saveAccountId(id: String) {
-        context.dataStore.edit { preferences ->
-            preferences[ACCOUNT_ID] = id
-        }
-    }
-
-    fun getAccountIdFlow(): Flow<String?> = context.dataStore.data
-        .map { preferences ->
-            preferences[ACCOUNT_ID]
-        }
-
-
     suspend fun saveToken(token: String) {
         context.dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token

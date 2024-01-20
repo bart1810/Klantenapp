@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -60,7 +61,7 @@ fun MainScreen() {
                                  Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                              }
                          }
-                     }
+                     },
                  )
         },
         bottomBar = {
@@ -87,6 +88,7 @@ fun BottomBar(navController: NavHostController ) {
     val currentDestination = navBackStackEntry?.destination
     NavigationBar(
         containerColor = Color.White,
+        contentColor = Color.Transparent
     ) {
         screens.forEach { screen ->
             AddItem(screen = screen, currentDestination = currentDestination, navController = navController)
@@ -101,6 +103,9 @@ fun RowScope.AddItem(
     navController: NavHostController
 ) {
     NavigationBarItem(
+        colors = NavigationBarItemDefaults.colors(
+            indicatorColor = Color.White
+        ),
         icon = {
             BadgedBox(
                 badge = {

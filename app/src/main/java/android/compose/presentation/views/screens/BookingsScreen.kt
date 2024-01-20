@@ -2,20 +2,14 @@ package android.compose.presentation.views.screens
 
 import android.compose.common.Screens
 import android.compose.data.local.AuthPreferences
-import android.compose.data.repository.cars.CarsRepositoryImplementation
 import android.compose.data.repository.customer.ICustomerRepository
-import android.compose.presentation.viewmodels.cars.CarDetailViewModel
 import android.compose.presentation.viewmodels.customer.CustomerViewModel
 import android.compose.util.Resource
 import android.compose.util.RetrofitInstance
-import androidx.compose.foundation.layout.Arrangement
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -35,8 +29,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
-import kotlinx.coroutines.flow.firstOrNull
 
 @Composable
 fun BookingsScreen(navController: NavController) {
@@ -57,7 +49,7 @@ fun BookingsScreen(navController: NavController) {
             }
             is Resource.Success -> {
                 customerState.data?.let { customerDetails ->
-
+                    Log.d("customerDetails", customerDetails.toString())
                 }
             }
             is Resource.Error -> {

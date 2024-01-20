@@ -63,13 +63,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun LoginScreen(navController: NavController,
-                route: String = Screens.CarScreen.route,
                 loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val authPreferences = AuthPreferences(context)
-    val accountViewModel: AccountViewModel = viewModel(factory = AccountViewModelFactory(authPreferences))
-
     val usernameState = loginViewModel.usernameState.value
     val passwordState = loginViewModel.passwordState.value
     val rememberMeState = loginViewModel.rememberMeState.value
@@ -79,15 +74,13 @@ fun LoginScreen(navController: NavController,
         loginViewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is UiEvents.SnackbarEvent -> {
-                    accountViewModel.fetAccount()
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message,
                         duration = SnackbarDuration.Short
                     )
                 }
                 is UiEvents.NavigateEvent -> {
-                    accountViewModel.fetAccount()
-                    navController.navigate(route)
+                    navController.navigateUp()
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message,
                         duration = SnackbarDuration.Short
@@ -171,12 +164,13 @@ fun LoginScreen(navController: NavController,
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(
+                        enabled = usernameState.text.isNotEmpty() && passwordState.text.isNotEmpty(),
                         onClick = { loginViewModel.loginUser() },
                         colors = ButtonDefaults.buttonColors(
                             Color(0xFFFFA500) // Orange color
                         )
                     ) {
-                        Text(stringResource(id = R.string.signIn))
+                        Text(stringResource(id = R.string.login))
                     }
                 }
             }
@@ -212,20 +206,5 @@ fun LoginScreen(navController: NavController,
                 }
             }
         }
-    }
-}
-
-class AccountViewModelFactory(
-    private val authPreferences: AuthPreferences
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AccountViewModel::class.java)) {
-            return AccountViewModel(
-                IAccountRepository(RetrofitInstance.autoMaatApi, authPreferences),
-                authPreferences
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

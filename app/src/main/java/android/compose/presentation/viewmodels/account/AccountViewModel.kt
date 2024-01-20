@@ -2,11 +2,8 @@ package android.compose.presentation.viewmodels.account
 
 import android.compose.data.local.AuthPreferences
 import android.compose.data.remote.response.AccountResponse
-import android.compose.data.remote.response.CarItemResponse
 import android.compose.data.repository.account.AccountRepository
-import android.compose.data.repository.cars.CarsRepository
 import android.compose.util.Resource
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,9 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flatMapLatest
 
 class AccountViewModel(
     private val accountRepository: AccountRepository,

@@ -8,6 +8,7 @@ import android.compose.common.components.text.TextComponent
 import android.compose.presentation.viewmodels.auth.RegisterViewModel
 import android.compose.ui.theme.Primary
 import android.compose.ui.theme.Secondary
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -40,6 +42,7 @@ import androidx.navigation.NavController
 fun SignUpScreen(navController: NavController,
                  registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
 
     val usernameState = registerViewModel.usernameState.value
     val emailState = registerViewModel.emailState.value
@@ -89,7 +92,13 @@ fun SignUpScreen(navController: NavController,
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { registerViewModel.registerUser() },
+                    enabled = emailState.text.isNotEmpty() && passwordState.text.isNotEmpty() && usernameState.text.isNotEmpty() && confirmPasswordState.text.isNotEmpty(),
+                    onClick = {
+                        if (passwordState.text != confirmPasswordState.text) {
+                            Toast.makeText(context, "Wachtwoorden komen niet overeen", Toast.LENGTH_SHORT).show()
+                        }
+                        registerViewModel.registerUser()
+                              },
                     colors = ButtonDefaults.buttonColors(
                         Color(0xFFFFA500) // Orange color
                     )

@@ -56,7 +56,6 @@ class RegisterViewModel@Inject constructor(
     }
 
     private val  _eventFlow = MutableSharedFlow<UiEvents>()
-    val eventFlow = _eventFlow.asSharedFlow()
 
     fun registerUser(){
         viewModelScope.launch {

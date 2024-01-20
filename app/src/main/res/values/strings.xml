@@ -10,12 +10,14 @@
     <string name="hide_password">Verberg wachtwoord</string>
     <string name="signUp">Registreren</string>
     <string name="signUpText">Registreer je hier</string>
+    <string name="editProfile">Profiel bewerken</string>
     <string name="login">Inloggen</string>
     <string name="loginSubText">Log in om verder te gaan</string>
-    <string name="signIn">Inloggen</string>
+    <string name="logout">Uitloggen</string>
     <string name="forgot_password">Wachtwoord vergeten?</string>
     <string name="has_no_account">Nog geen account?</string>
     <string name="has_account">Heb je al een account?</string>
     <string name="signInText">Log hier in</string>
     <string name="remember_me">Onthoudt mij</string>
+    <string name="cancel">Annuleren</string>
 </resources>

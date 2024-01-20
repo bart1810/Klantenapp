@@ -1,6 +1,5 @@
 package android.compose.data.repository.account
 
-import android.compose.data.local.AuthPreferences
 import android.compose.util.Resource
 import android.compose.data.remote.AutoMaatApi
 import android.compose.data.remote.response.AccountResponse
@@ -11,14 +10,12 @@ import java.io.IOException
 
 class IAccountRepository(
     private val autoMaatApi: AutoMaatApi,
-    private val preferences: AuthPreferences
 ): AccountRepository {
 
     override suspend fun getAccount(token: String): Flow<Resource<AccountResponse>> = flow {
         try {
             emit(Resource.Loading())
             val accountResponse = autoMaatApi.getAccount("Bearer $token")
-            preferences.saveAccountId(accountResponse.id.toString())
             emit(Resource.Success(accountResponse))
         } catch (e: IOException) {
             e.printStackTrace()
