@@ -6,7 +6,6 @@ import android.compose.data.remote.request.RegisterRequest
 import android.compose.data.remote.response.AccountResponse
 import android.compose.data.remote.response.CustomerResponse
 import android.compose.data.remote.response.LoginResponse
-import android.compose.data.remote.response.RegisterResponse
 import android.compose.util.Constants
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,7 +22,7 @@ interface AutoMaatApi {
     suspend fun loginUser(@Body loginRequest: LoginRequest): LoginResponse
 
     @POST("/api/AM/register")
-    suspend fun registerUser(@Body registerRequest: RegisterRequest): Void
+    suspend fun registerUser(@Body registerRequest: RegisterRequest)
 
     @GET("/api/cars")
     suspend fun getAllCars(): List<CarItemResponse>

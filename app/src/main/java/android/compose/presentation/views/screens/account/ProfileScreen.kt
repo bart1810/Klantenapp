@@ -105,13 +105,13 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel =
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.default_profile),
-                                contentDescription = "A call icon for calling"
+                                contentDescription = "Default profile picture"
                             )
                             Text(modifier = Modifier
                                 .padding(15.dp),
                                 color = TextColor,
                                 fontWeight = FontWeight.Medium,
-                                text = accountDetails.firstName + " " + accountDetails.lastName
+                                text = accountDetails.login
                             )
 //                            TODO: Scherm maken om je profiel te bewerken
                             TextButton(

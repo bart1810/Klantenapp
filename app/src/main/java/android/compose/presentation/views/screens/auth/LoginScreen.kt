@@ -69,6 +69,7 @@ fun LoginScreen(navController: NavController,
                         message = event.message,
                         duration = SnackbarDuration.Short
                     )
+
                 }
             }
         }

@@ -2,7 +2,6 @@ package android.compose.presentation.viewmodels.auth
 
 import android.compose.common.UiEvents
 import android.compose.data.remote.request.RegisterRequest
-import android.compose.data.remote.response.RegisterResponse
 import android.compose.data.repository.auth.AuthRepository
 import android.compose.util.Resource
 import androidx.lifecycle.ViewModel
@@ -57,6 +56,7 @@ class RegisterViewModel@Inject constructor(
     }
 
     private val  _eventFlow = MutableSharedFlow<UiEvents>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     fun registerUser(){
         viewModelScope.launch {
