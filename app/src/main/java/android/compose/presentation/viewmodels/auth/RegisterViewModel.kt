@@ -7,6 +7,7 @@ import android.compose.data.repository.auth.AuthRepository
 import android.compose.util.Resource
 import androidx.lifecycle.ViewModel
 import android.compose.presentation.viewmodels.states.TextFieldState
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
@@ -24,7 +25,7 @@ class RegisterViewModel@Inject constructor(
     private val authRepository: AuthRepository,
 ): ViewModel() {
 
-    private val _registerState = MutableStateFlow<Resource<RegisterResponse>?>(null)
+    private val _registerState = MutableStateFlow<Resource<Any>?>(null)
     private val registerState = _registerState.asStateFlow()
 
     private val _usernameState = mutableStateOf(TextFieldState())
@@ -61,10 +62,12 @@ class RegisterViewModel@Inject constructor(
         viewModelScope.launch {
             val registerRequest = RegisterRequest (
                 login = usernameState.value.text,
-                password = passwordState.value.text,
                 email = emailState.value.text,
-                langKey = "en"
+                langKey = "en",
+                password = passwordState.value.text,
+                activated = true
             )
+            Log.d("RegisterRequest", registerRequest.toString())
 
             authRepository.registerUser(registerRequest).collectLatest { result ->
                 _registerState.value = result

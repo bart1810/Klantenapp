@@ -61,6 +61,8 @@ class LoginViewModel@Inject constructor(
                 rememberMe = rememberMeState.value.checked
             )
 
+            Log.d("loginRequest", loginRequest.toString())
+
             authRepository.loginUser(loginRequest).collectLatest { result ->
                 _loginState.value = result
             }

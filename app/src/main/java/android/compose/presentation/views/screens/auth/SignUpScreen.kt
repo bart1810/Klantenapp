@@ -96,9 +96,10 @@ fun SignUpScreen(navController: NavController,
                     onClick = {
                         if (passwordState.text != confirmPasswordState.text) {
                             Toast.makeText(context, "Wachtwoorden komen niet overeen", Toast.LENGTH_SHORT).show()
+                        } else {
+                            registerViewModel.registerUser()
                         }
-                        registerViewModel.registerUser()
-                              },
+                    },
                     colors = ButtonDefaults.buttonColors(
                         Color(0xFFFFA500) // Orange color
                     )

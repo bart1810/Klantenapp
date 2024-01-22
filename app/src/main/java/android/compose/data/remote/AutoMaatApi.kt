@@ -23,7 +23,7 @@ interface AutoMaatApi {
     suspend fun loginUser(@Body loginRequest: LoginRequest): LoginResponse
 
     @POST("/api/AM/register")
-    suspend fun registerUser(@Body registerRequest: RegisterRequest): RegisterResponse
+    suspend fun registerUser(@Body registerRequest: RegisterRequest): Void
 
     @GET("/api/cars")
     suspend fun getAllCars(): List<CarItemResponse>

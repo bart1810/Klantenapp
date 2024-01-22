@@ -43,11 +43,11 @@ class IAuthRepository(
         }
     }
 
-    override suspend fun registerUser(registerRequest: RegisterRequest): Flow<Resource<RegisterResponse>> = flow {
+    override suspend fun registerUser(registerRequest: RegisterRequest): Flow<Resource<Any>> = flow {
         try {
             emit(Resource.Loading())
-            val response = autoMaatApi.registerUser(registerRequest)
-            emit(Resource.Success(response))
+            autoMaatApi.registerUser(registerRequest)
+            emit(Resource.Success())
         } catch (e: IOException) {
             e.printStackTrace()
             emit(Resource.Error("${e.message}"))
