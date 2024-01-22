@@ -6,38 +6,26 @@ import android.compose.common.UiEvents
 import android.compose.common.components.forms.PasswordComponent
 import android.compose.common.components.forms.TextFieldComponent
 import android.compose.common.components.text.TextComponent
-import android.compose.data.local.AuthPreferences
-import android.compose.data.repository.account.IAccountRepository
-import android.compose.data.repository.cars.CarsRepositoryImplementation
-import android.compose.presentation.viewmodels.account.AccountViewModel
 import android.compose.ui.theme.Primary
 import android.compose.ui.theme.Secondary
 import android.compose.ui.theme.TextColor
 import android.compose.presentation.viewmodels.auth.LoginViewModel
-import android.compose.presentation.viewmodels.cars.CarDetailViewModel
-import android.compose.util.RetrofitInstance
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.CheckboxColors
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -46,7 +34,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -55,9 +42,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 
@@ -167,7 +151,7 @@ fun LoginScreen(navController: NavController,
                         enabled = usernameState.text.isNotEmpty() && passwordState.text.isNotEmpty(),
                         onClick = { loginViewModel.loginUser() },
                         colors = ButtonDefaults.buttonColors(
-                            Color(0xFFFFA500) // Orange color
+                            Color(0xFFFFA500)
                         )
                     ) {
                         Text(stringResource(id = R.string.login))

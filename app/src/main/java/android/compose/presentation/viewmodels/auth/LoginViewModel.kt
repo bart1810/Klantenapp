@@ -32,6 +32,12 @@ class LoginViewModel@Inject constructor(
     private val _usernameState = mutableStateOf(TextFieldState())
     val usernameState: State<TextFieldState> = _usernameState
 
+    private val _passwordState = mutableStateOf(TextFieldState())
+    val passwordState: State<TextFieldState> = _passwordState
+
+    private val _rememberMeState = mutableStateOf(CheckboxState())
+    val rememberMeState: State<CheckboxState> = _rememberMeState
+
     fun setUsername(value:String){
         _usernameState.value = usernameState.value.copy(text = value)
     }
@@ -44,16 +50,10 @@ class LoginViewModel@Inject constructor(
         _rememberMeState.value = rememberMeState.value.copy(checked = value)
     }
 
-    private val _passwordState = mutableStateOf(TextFieldState())
-    val passwordState: State<TextFieldState> = _passwordState
-
-    private val _rememberMeState = mutableStateOf(CheckboxState())
-    val rememberMeState: State<CheckboxState> = _rememberMeState
-
     private val  _eventFlow = MutableSharedFlow<UiEvents>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun loginUser(){
+    fun loginUser() {
         viewModelScope.launch {
             val loginRequest = LoginRequest(
                 username = usernameState.value.text,
@@ -65,16 +65,17 @@ class LoginViewModel@Inject constructor(
                 _loginState.value = result
             }
 
-            when(loginState.value){
-                is Resource.Success->{
+            when (loginState.value) {
+                is Resource.Success -> {
                     _eventFlow.emit(
                         UiEvents.NavigateEvent(
                             loginState.value?.message ?: "Success!"
                         )
                     )
                 }
-                is Resource.Error->{
-                    var message = "Gebruikersnaam of wachtwoord is onjuist"
+
+                is Resource.Error -> {
+                    val message = "Gebruikersnaam of wachtwoord is onjuist"
 
                     _eventFlow.emit(
                         UiEvents.SnackbarEvent(
@@ -82,9 +83,15 @@ class LoginViewModel@Inject constructor(
                         )
                     )
                 }
+
                 else -> {
                 }
             }
+        }
+    }
+    fun logoutUser() {
+        viewModelScope.launch {
+            authRepository.logoutUser()
         }
     }
 }

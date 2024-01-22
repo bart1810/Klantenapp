@@ -15,16 +15,20 @@ class ICustomerRepository(
     override suspend fun getCustomer(token: String): Flow<Resource<CustomerResponse>> {
         return flow {
             val customerFromApi = try {
-                autoMaatApi.getCustomerDetails("Bearer $token")
+                emit(Resource.Loading())
+                autoMaatApi.getCustomer("Bearer $token")
             } catch (e: IOException) {
+                emit(Resource.Loading())
                 e.printStackTrace()
                 emit(Resource.Error("Error loading customer"))
                 return@flow
             } catch (e: HttpException) {
+                emit(Resource.Loading())
                 e.printStackTrace()
                 emit(Resource.Error("Error loading customer"))
                 return@flow
             } catch (e: Exception) {
+                emit(Resource.Loading())
                 e.printStackTrace()
                 emit(Resource.Error("Error loading customer"))
                 return@flow

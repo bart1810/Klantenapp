@@ -34,12 +34,8 @@ interface AutoMaatApi {
         @Path("carId") carId: String): CarItemResponse
 
     @GET("/api/AM/me")
-    suspend fun getCustomer(@Header("Authorization") token: String): AccountResponse
+    suspend fun getCustomer(@Header("Authorization") token: String): CustomerResponse
 
     @GET("/api/account")
     suspend fun getAccount(@Header("Authorization") token: String): AccountResponse
-
-    @GET("/api/customers/{customerId}")
-    suspend fun getCustomerDetails(
-        @Header("Authorization") token: String): CustomerResponse
 }

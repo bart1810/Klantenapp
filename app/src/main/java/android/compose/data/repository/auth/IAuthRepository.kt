@@ -8,6 +8,7 @@ import android.compose.data.remote.request.RegisterRequest
 import android.compose.data.remote.response.LoginResponse
 import android.compose.data.remote.response.RegisterResponse
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
@@ -31,6 +32,14 @@ class IAuthRepository(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(Resource.Error("${e.message}"))
+        }
+    }
+
+    override suspend fun logoutUser() {
+        if (!preferences.getTokenFlow().firstOrNull().isNullOrEmpty()) {
+            preferences.deleteToken()
+        } else {
+            return
         }
     }
 

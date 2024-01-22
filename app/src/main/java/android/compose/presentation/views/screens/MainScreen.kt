@@ -44,6 +44,8 @@ fun MainScreen() {
     val bottomBarTabs = BottomNavigationItem.entries.toTypedArray()
     val bottomBarRoutes = bottomBarTabs.map { it.route }
 
+    val showComponent = navController.currentBackStackEntryAsState().value?.destination?.route in bottomBarRoutes
+
     Scaffold(
         topBar = {
                  CenterAlignedTopAppBar(
@@ -56,7 +58,7 @@ fun MainScreen() {
                          )
                      },
                      navigationIcon = {
-                         if (navController.currentBackStackEntryAsState().value?.destination?.route !in bottomBarRoutes) {
+                         if (!showComponent) {
                              IconButton(onClick = { navController.navigateUp() }) {
                                  Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                              }
@@ -65,7 +67,7 @@ fun MainScreen() {
                  )
         },
         bottomBar = {
-            if (navController.currentBackStackEntryAsState().value?.destination?.route in bottomBarRoutes) {
+            if (showComponent) {
                 BottomBar(navController = navController)
             }
         }
