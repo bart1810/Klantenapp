@@ -3,6 +3,7 @@ package android.compose.data.repository.auth
 import android.compose.util.Resource
 import android.compose.data.remote.AutoMaatApi
 import android.compose.data.local.AuthPreferences
+import android.compose.data.remote.request.ForgotPasswordRequest
 import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
 import android.compose.data.remote.response.LoginResponse
@@ -46,6 +47,23 @@ class IAuthRepository(
         try {
             emit(Resource.Loading())
             autoMaatApi.registerUser(registerRequest)
+            emit(Resource.Success())
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        }
+    }
+
+    override suspend fun changePasswordFinish(passwordRequest: ForgotPasswordRequest): Flow<Resource<Any>> = flow {
+        try {
+            emit(Resource.Loading())
+            autoMaatApi.resetPasswordFinish(passwordRequest)
             emit(Resource.Success())
         } catch (e: IOException) {
             e.printStackTrace()

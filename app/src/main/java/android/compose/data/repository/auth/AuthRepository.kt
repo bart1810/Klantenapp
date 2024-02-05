@@ -1,5 +1,6 @@
 package android.compose.data.repository.auth
 
+import android.compose.data.remote.request.ForgotPasswordRequest
 import android.compose.util.Resource
 import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
@@ -10,4 +11,6 @@ interface AuthRepository {
     suspend fun loginUser(loginRequest: LoginRequest): Flow<Resource<LoginResponse>>
     suspend fun registerUser(registerRequest: RegisterRequest): Flow<Resource<Any>>
     suspend fun logoutUser()
+
+    suspend fun changePasswordFinish(passwordRequest: ForgotPasswordRequest): Flow<Resource<Any>>
 }

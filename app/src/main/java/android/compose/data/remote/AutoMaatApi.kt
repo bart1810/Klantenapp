@@ -1,5 +1,6 @@
 package android.compose.data.remote
 
+import android.compose.data.remote.request.ForgotPasswordRequest
 import android.compose.data.remote.request.InspectionRequest
 import android.compose.data.remote.response.CarItemResponse
 import android.compose.data.remote.request.LoginRequest
@@ -28,8 +29,7 @@ interface AutoMaatApi {
     @POST("/api/inspections")
     suspend fun sendInspection(
         @Header("Authorization") token: String,
-        @Body inspectionRequest: InspectionRequest
-    )
+        @Body inspectionRequest: InspectionRequest)
 
     @GET("/api/cars")
     suspend fun getAllCars(): List<CarItemResponse>
@@ -44,4 +44,10 @@ interface AutoMaatApi {
 
     @GET("/api/account")
     suspend fun getAccount(@Header("Authorization") token: String): AccountResponse
+
+    @POST("/api/account/reset-password/init")
+    suspend fun resetPasswordInit(@Body emailAddress: String): Void
+
+    @POST("/api/account/reset-password/finish")
+    suspend fun resetPasswordFinish(@Body forgotPasswordRequest: ForgotPasswordRequest): Void
 }
