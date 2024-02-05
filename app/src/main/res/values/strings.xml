@@ -20,4 +20,5 @@
     <string name="signInText">Log hier in</string>
     <string name="remember_me">Onthoudt mij</string>
     <string name="cancel">Annuleren</string>
+    <string name="file_provider_authority">android.compose.provider</string>
 </resources>

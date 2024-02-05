@@ -138,7 +138,7 @@ fun CardDetails(navController: NavController, carsItem: CarItemResponse) {
                 .fillMaxWidth()
         ) {
             AsyncImage(
-                model = "https://parkers-images.bauersecure.com/wp-images/18290/930x620/90-vauxhall-corsa-electric-best-small-cars.jpg",
+                model = "https://www.autohurenrhodos.nl/wp-content/uploads/2022/10/auto-huren-rhodos-min.png",
                 contentDescription = "Car image",
                 modifier = Modifier.fillMaxWidth()
             )

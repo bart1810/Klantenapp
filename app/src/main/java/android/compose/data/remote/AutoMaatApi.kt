@@ -1,5 +1,6 @@
 package android.compose.data.remote
 
+import android.compose.data.remote.request.InspectionRequest
 import android.compose.data.remote.response.CarItemResponse
 import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
@@ -23,6 +24,12 @@ interface AutoMaatApi {
 
     @POST("/api/AM/register")
     suspend fun registerUser(@Body registerRequest: RegisterRequest)
+
+    @POST("/api/inspections")
+    suspend fun sendInspection(
+        @Header("Authorization") token: String,
+        @Body inspectionRequest: InspectionRequest
+    )
 
     @GET("/api/cars")
     suspend fun getAllCars(): List<CarItemResponse>
