@@ -54,7 +54,7 @@ fun CarDetailScreen(navController: NavController, carId: String?) {
             is Resource.Success -> {
                 carDetailsState.data?.let { carDetails ->
                     AsyncImage(
-                        model = "https://parkers-images.bauersecure.com/wp-images/18290/930x620/90-vauxhall-corsa-electric-best-small-cars.jpg",
+                        model = "https://www.autohurenrhodos.nl/wp-content/uploads/2022/10/auto-huren-rhodos-min.png",
                         contentDescription = "Car image",
                         modifier = Modifier
                             .fillMaxWidth()
@@ -103,23 +103,23 @@ fun TableLayout(carDetails: CarItemResponse) {
                 fontWeight = FontWeight.Bold,
             )
         }
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = Modifier.padding(5.dp)) {
             Text("Engine Size: ", fontWeight = FontWeight.Bold)
             Text("${carDetails.engineSize}")
         }
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = Modifier.padding(5.dp)) {
             Text("Benzine type: ", fontWeight = FontWeight.Bold)
             Text(carDetails.fuel)
         }
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = Modifier.padding(5.dp)) {
             Text("Model jaar: ", fontWeight = FontWeight.Bold)
             Text("${carDetails.modelYear}")
         }
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = Modifier.padding(5.dp)) {
             Text("Aantal zitplaatsen: ", fontWeight = FontWeight.Bold)
             Text("${carDetails.nrOfSeats}")
         }
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = Modifier.padding(5.dp)) {
             Text("Prijs: ", fontWeight = FontWeight.Bold)
             Text("${carDetails.price}")
         }
