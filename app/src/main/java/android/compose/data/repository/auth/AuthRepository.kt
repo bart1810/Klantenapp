@@ -6,6 +6,7 @@ import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
 import android.compose.data.remote.response.LoginResponse
 import kotlinx.coroutines.flow.Flow
+import okhttp3.RequestBody
 
 interface AuthRepository {
     suspend fun loginUser(loginRequest: LoginRequest): Flow<Resource<LoginResponse>>
@@ -13,4 +14,6 @@ interface AuthRepository {
     suspend fun logoutUser()
 
     suspend fun changePasswordFinish(passwordRequest: ForgotPasswordRequest): Flow<Resource<Any>>
+
+    suspend fun changePasswordInit(emailAddress: RequestBody): Flow<Resource<Any>>
 }

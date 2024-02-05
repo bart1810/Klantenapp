@@ -9,6 +9,7 @@ import android.compose.data.remote.response.AccountResponse
 import android.compose.data.remote.response.CustomerResponse
 import android.compose.data.remote.response.LoginResponse
 import android.compose.util.Constants
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -46,8 +47,8 @@ interface AutoMaatApi {
     suspend fun getAccount(@Header("Authorization") token: String): AccountResponse
 
     @POST("/api/account/reset-password/init")
-    suspend fun resetPasswordInit(@Body emailAddress: String): Void
+    suspend fun resetPasswordInit(@Body emailAddress: RequestBody)
 
     @POST("/api/account/reset-password/finish")
-    suspend fun resetPasswordFinish(@Body forgotPasswordRequest: ForgotPasswordRequest): Void
+    suspend fun resetPasswordFinish(@Body forgotPasswordRequest: ForgotPasswordRequest)
 }

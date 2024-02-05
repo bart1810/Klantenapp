@@ -7,9 +7,11 @@ import android.compose.data.remote.request.ForgotPasswordRequest
 import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
 import android.compose.data.remote.response.LoginResponse
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import okhttp3.RequestBody
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -64,6 +66,23 @@ class IAuthRepository(
         try {
             emit(Resource.Loading())
             autoMaatApi.resetPasswordFinish(passwordRequest)
+            emit(Resource.Success())
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        }
+    }
+
+    override suspend fun changePasswordInit(emailAddress: RequestBody): Flow<Resource<Any>> = flow {
+        try {
+            emit(Resource.Loading())
+            autoMaatApi.resetPasswordInit(emailAddress)
             emit(Resource.Success())
         } catch (e: IOException) {
             e.printStackTrace()

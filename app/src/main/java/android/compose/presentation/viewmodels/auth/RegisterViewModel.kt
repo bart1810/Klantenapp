@@ -67,7 +67,6 @@ class RegisterViewModel@Inject constructor(
                 password = passwordState.value.text,
                 activated = true
             )
-            Log.d("RegisterRequest", registerRequest.toString())
 
             authRepository.registerUser(registerRequest).collectLatest { result ->
                 _registerState.value = result

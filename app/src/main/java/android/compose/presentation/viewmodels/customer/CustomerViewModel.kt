@@ -20,7 +20,7 @@ class CustomerViewModel(
     private val _customerDetails = MutableStateFlow<Resource<CustomerResponse>?>(null)
     val customerDetails = _customerDetails.asStateFlow()
 
-    fun fetCustomer() {
+    fun fetchCustomer() {
         viewModelScope.launch {
             val token = authPreferences.getTokenFlow().firstOrNull()
             if (!token.isNullOrBlank()) {

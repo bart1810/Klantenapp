@@ -134,7 +134,7 @@ fun LoginScreen(navController: NavController,
                         onClick = { navController.navigate(Screens.ForgotPasswordScreen.route) },
                     ) {
                         Text(
-                            text = stringResource(R.string.forgot_password),
+                            text = stringResource(R.string.forgot_password_question_mark),
                             style = TextStyle(
                                 fontSize = 15.sp,
                                 color = Primary,

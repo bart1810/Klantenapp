@@ -6,8 +6,12 @@
     <string name="email">E-mailadres</string>
     <string name="password">Wachtwoord</string>
     <string name="confirm_password">Wachtwoord bevestigen</string>
-    <string name="forgot_password">Wachtwoord vergeten?</string>
+    <string name="forgot_password_question_mark">Wachtwoord vergeten?</string>
+    <string name="forgot_password">Wachtwoord vergeten</string>
+    <string name="forgot_password_subtext_1">Vul je e-mailadres in om je wachtwoord te wijzigen, in de mail staat een key die je nodig bent om het wachtwoord wijzigen</string>
+    <string name="forgot_password_subtext_2">Vul hier de key in uit de mail en kies een nieuw wachtwoord</string>
     <string name="change_password">Wachtwoord wijzigen</string>
+    <string name="send_email">E-mail versturen</string>
     <string name="show_password">Toon wachttwoord</string>
     <string name="hide_password">Verberg wachtwoord</string>
     <string name="signUp">Registreren</string>
