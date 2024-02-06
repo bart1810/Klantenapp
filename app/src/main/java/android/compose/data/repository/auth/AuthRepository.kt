@@ -1,5 +1,6 @@
 package android.compose.data.repository.auth
 
+import android.compose.data.remote.request.ChangePasswordRequest
 import android.compose.data.remote.request.ForgotPasswordRequest
 import android.compose.util.Resource
 import android.compose.data.remote.request.LoginRequest
@@ -16,4 +17,6 @@ interface AuthRepository {
     suspend fun changePasswordFinish(passwordRequest: ForgotPasswordRequest): Flow<Resource<Any>>
 
     suspend fun changePasswordInit(emailAddress: RequestBody): Flow<Resource<Any>>
+
+    suspend fun changePassword(token: String, changePasswordRequest: ChangePasswordRequest): Flow<Resource<Any>>
 }

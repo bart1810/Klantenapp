@@ -1,34 +1,31 @@
 package android.compose.presentation.viewmodels.auth
 
 import android.compose.common.UiEvents
+import android.compose.data.local.AuthPreferences
+import android.compose.data.remote.request.ChangePasswordRequest
 import android.compose.data.remote.request.ForgotPasswordRequest
-import android.compose.data.remote.request.LoginRequest
-import android.compose.data.remote.request.RegisterRequest
-import android.compose.data.remote.response.LoginResponse
 import android.compose.data.repository.auth.AuthRepository
 import android.compose.presentation.viewmodels.states.TextFieldState
 import android.compose.util.Resource
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 @HiltViewModel
 class PasswordViewModel@Inject constructor(
     private val authRepository: AuthRepository,
+    private val authPreferences: AuthPreferences
 ): ViewModel() {
 
     private val _forgotPasswordState = MutableStateFlow<Resource<Any>?>(null)
@@ -39,6 +36,9 @@ class PasswordViewModel@Inject constructor(
 
     private val _newPasswordState = mutableStateOf(TextFieldState())
     val newPasswordState: State<TextFieldState> = _newPasswordState
+
+    private val _oldPasswordState = mutableStateOf(TextFieldState())
+    val oldPasswordState: State<TextFieldState> = _oldPasswordState
 
     private val _confirmPasswordState = mutableStateOf(TextFieldState())
     val confirmPasswordState: State<TextFieldState> = _confirmPasswordState
@@ -57,6 +57,10 @@ class PasswordViewModel@Inject constructor(
         _newPasswordState.value = newPasswordState.value.copy(text = value)
     }
 
+    fun setOldPassword(value:String) {
+        _oldPasswordState.value = oldPasswordState.value.copy(text = value)
+    }
+
     fun setConfirmPassword(value:String){
         _confirmPasswordState.value = confirmPasswordState.value.copy(text = value)
     }
@@ -65,7 +69,28 @@ class PasswordViewModel@Inject constructor(
         _keyState.value = keyState.value.copy(text = value)
     }
 
-    fun changePasswordInit() {
+    fun changePassword() {
+        viewModelScope.launch {
+            val request = ChangePasswordRequest (
+                currentPassword = oldPasswordState.value.text,
+                newPassword = newPasswordState.value.text,
+            )
+
+            val token = authPreferences.getTokenFlow().firstOrNull()
+            val storedOldPassword = authPreferences.getPasswordFlow().firstOrNull()
+            if (!token.isNullOrBlank() && !storedOldPassword.isNullOrBlank() && storedOldPassword == oldPasswordState.value.text) {
+                authRepository.changePassword("$token", request).collectLatest { result ->
+                    _forgotPasswordState.value = result
+                }
+            } else if (token.isNullOrBlank()) {
+                _forgotPasswordState.value = Resource.Error("Authorization token is missing")
+            } else {
+                _forgotPasswordState.value = Resource.Error("Old password is not correct")
+            }
+        }
+    }
+
+    fun changeForgottenPasswordInit() {
         viewModelScope.launch {
 
             authRepository.changePasswordInit(emailState.value.text.toRequestBody()).collectLatest { result ->

@@ -252,6 +252,30 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel =
                 .height(40.dp)
                 .clickable(
                     onClick = {
+                        navController.navigate(Screens.ChangePasswordScreen.route)
+                    }),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 5.dp, end = 5.dp)
+                    ,
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(id = R.string.change_password))
+                    Icon(
+                        painter = painterResource(R.drawable.chevron_right_icon),
+                        contentDescription = "pointer"
+                    )
+                }
+            }
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .clickable(
+                    onClick = {
                         showLogoutMessage.value = true
                     }),
                 contentAlignment = Alignment.CenterStart

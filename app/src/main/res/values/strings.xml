@@ -5,6 +5,8 @@
     <string name="username">Gebruikersnaam</string>
     <string name="email">E-mailadres</string>
     <string name="password">Wachtwoord</string>
+    <string name="password_old">Oud wachtwoord</string>
+    <string name="password_new">Nieuw wachtwoord</string>
     <string name="confirm_password">Wachtwoord bevestigen</string>
     <string name="forgot_password_question_mark">Wachtwoord vergeten?</string>
     <string name="forgot_password">Wachtwoord vergeten</string>

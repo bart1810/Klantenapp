@@ -7,7 +7,6 @@ import android.compose.common.components.forms.TextFieldComponent
 import android.compose.common.components.text.TextComponent
 import android.compose.ui.theme.Secondary
 import android.compose.presentation.viewmodels.auth.PasswordViewModel
-import android.compose.util.Resource
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,17 +22,14 @@ import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -57,7 +53,6 @@ fun ForgotPasswordScreen(navController: NavController,
     val scaffoldState = rememberScaffoldState()
     var emailSent by remember { mutableStateOf(false) }
 
-    val forgotPasswordState = passwordViewModel.forgotPasswordState.collectAsState().value
 
     LaunchedEffect(key1 = true) {
         passwordViewModel.eventFlow.collectLatest { event ->
@@ -183,7 +178,7 @@ fun ForgotPasswordScreen(navController: NavController,
                         Button(
                             enabled = emailState.text.isNotEmpty(),
                             onClick = {
-                                passwordViewModel.changePasswordInit()
+                                passwordViewModel.changeForgottenPasswordInit()
                                 emailSent = true
                             },
                             colors = ButtonDefaults.buttonColors(

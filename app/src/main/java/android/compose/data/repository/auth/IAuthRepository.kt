@@ -3,6 +3,7 @@ package android.compose.data.repository.auth
 import android.compose.util.Resource
 import android.compose.data.remote.AutoMaatApi
 import android.compose.data.local.AuthPreferences
+import android.compose.data.remote.request.ChangePasswordRequest
 import android.compose.data.remote.request.ForgotPasswordRequest
 import android.compose.data.remote.request.LoginRequest
 import android.compose.data.remote.request.RegisterRequest
@@ -24,6 +25,7 @@ class IAuthRepository(
             emit(Resource.Loading())
             val response = autoMaatApi.loginUser(loginRequest)
             preferences.saveToken(response.token)
+            preferences.savePassword(loginRequest.password)
             emit(Resource.Success(response))
         } catch (e: IOException) {
             e.printStackTrace()
@@ -83,6 +85,22 @@ class IAuthRepository(
         try {
             emit(Resource.Loading())
             autoMaatApi.resetPasswordInit(emailAddress)
+            emit(Resource.Success())
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error("${e.message}"))
+        }
+    }
+    override suspend fun changePassword(token: String, changePasswordRequest: ChangePasswordRequest): Flow<Resource<Any>> = flow {
+        try {
+            emit(Resource.Loading())
+            autoMaatApi.changePassword("Bearer $token", changePasswordRequest)
             emit(Resource.Success())
         } catch (e: IOException) {
             e.printStackTrace()

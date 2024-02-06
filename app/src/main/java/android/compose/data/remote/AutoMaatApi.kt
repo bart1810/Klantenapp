@@ -1,5 +1,6 @@
 package android.compose.data.remote
 
+import android.compose.data.remote.request.ChangePasswordRequest
 import android.compose.data.remote.request.ForgotPasswordRequest
 import android.compose.data.remote.request.InspectionRequest
 import android.compose.data.remote.response.CarItemResponse
@@ -51,4 +52,7 @@ interface AutoMaatApi {
 
     @POST("/api/account/reset-password/finish")
     suspend fun resetPasswordFinish(@Body forgotPasswordRequest: ForgotPasswordRequest)
+
+    @POST("/api/account/change-password")
+    suspend fun changePassword(@Header("Authorization") token: String, @Body changePasswordRequest: ChangePasswordRequest)
 }
