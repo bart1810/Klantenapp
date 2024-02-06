@@ -52,7 +52,11 @@ fun CarsScreen(navController: NavController) {
     val selectedBodyFilters = viewModel.selectedBodyTypes.collectAsState().value
 
     val noCarsFound = viewModel.noCarsFound.collectAsState().value
-    val carsList = if (noCarsFound) viewModel.allCars.collectAsState().value else viewModel.cars.collectAsState().value
+    val carsList = if (noCarsFound) {
+        viewModel.allCars.collectAsState().value
+    } else {
+        viewModel.cars.collectAsState().value
+    }
 
     val context = LocalContext.current
 
