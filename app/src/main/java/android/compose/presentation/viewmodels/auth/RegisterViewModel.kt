@@ -6,7 +6,6 @@ import android.compose.data.repository.auth.AuthRepository
 import android.compose.util.Resource
 import androidx.lifecycle.ViewModel
 import android.compose.presentation.viewmodels.states.TextFieldState
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope

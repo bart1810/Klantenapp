@@ -7,7 +7,6 @@ import android.compose.data.remote.AutoMaatApi.Companion.BASE_URL
 import android.compose.data.repository.auth.AuthRepository
 import android.compose.data.repository.auth.IAuthRepository
 import android.compose.data.local.AuthPreferences
-import android.compose.data.repository.cars.CarsRepository
 import android.compose.data.repository.cars.CarsRepositoryImplementation
 import android.compose.util.Constants.AUTH_PREFERENCES
 import android.content.Context
@@ -17,12 +16,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
