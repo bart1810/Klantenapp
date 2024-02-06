@@ -27,11 +27,11 @@ enum class BottomNavigationItem(
         hasNews = false,
     ),
 
-    Notifications(
-        title = "Notifications",
-        route = Screens.NotificationsScreen.route,
-        selectedIcon = R.drawable.bell_filled,
-        unselectedIcon = R.drawable.bell_outlined,
+    Favorites(
+        title = "Favorites",
+        route = Screens.FavoritesScreen.route,
+        selectedIcon = R.drawable.star_filled,
+        unselectedIcon = R.drawable.star_outlined,
         hasNews = false,
     ),
 

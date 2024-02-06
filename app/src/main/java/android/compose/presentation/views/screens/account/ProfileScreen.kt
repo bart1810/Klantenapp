@@ -108,7 +108,7 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel =
                                 contentDescription = "Default profile picture"
                             )
                             Text(modifier = Modifier
-                                .padding(15.dp),
+                                .padding(top = 15.dp),
                                 color = TextColor,
                                 fontWeight = FontWeight.Medium,
                                 text = accountDetails.login

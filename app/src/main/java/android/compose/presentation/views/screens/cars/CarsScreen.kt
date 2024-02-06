@@ -172,7 +172,7 @@ fun CardDetails(navController: NavController, carsItem: CarItemResponse) {
                     Color(0xFFFFA500) // Orange color
                 )
             ) {
-                Text("Boek nu!")
+                Text("Meer informatie")
             }
         }
     }

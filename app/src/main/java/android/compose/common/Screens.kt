@@ -3,7 +3,7 @@ package android.compose.common
 sealed class Screens(val route: String) {
     data object CarScreen : Screens("cars")
     data object BookingsScreen : Screens("bookings")
-    data object NotificationsScreen : Screens("notifications")
+    data object FavoritesScreen : Screens("favorites")
     data object Profile : Screens("profile")
     data object LoginScreen : Screens("login")
     data object DamageFormScreen : Screens("damageForm")

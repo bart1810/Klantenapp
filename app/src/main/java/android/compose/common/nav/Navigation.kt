@@ -4,7 +4,7 @@ import CarDetailScreen
 import android.compose.common.Screens
 import android.compose.presentation.views.screens.BookingsScreen
 import android.compose.presentation.views.screens.cars.CarsScreen
-import android.compose.presentation.views.screens.NotificationsScreen
+import android.compose.presentation.views.screens.FavoritesScreen
 import android.compose.presentation.views.screens.account.DamageFormScreen
 import android.compose.presentation.views.screens.account.FaqScreen
 import android.compose.presentation.views.screens.account.ProfileScreen
@@ -39,8 +39,8 @@ fun Navigation(navController: NavHostController) {
         composable(route = Screens.BookingsScreen.route) {
             BookingsScreen(navController)
         }
-        composable(route = Screens.NotificationsScreen.route) {
-            NotificationsScreen(navController)
+        composable(route = Screens.FavoritesScreen.route) {
+            FavoritesScreen(navController)
         }
         composable(route = Screens.Profile.route) {
             ProfileScreen(navController)

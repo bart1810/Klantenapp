@@ -16,6 +16,7 @@ import android.compose.util.RetrofitInstance
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -83,6 +85,12 @@ fun BookingsScreen(navController: NavController) {
                             modifier = Modifier
                                 .padding(top = 140.dp)
                         ) {
+                            Image(
+                                painterResource(id = R.drawable.documents_mad),
+                                contentDescription = "documents",
+                                modifier = Modifier
+                                    .width(250.dp)
+                            )
                             Text(
                                 text = "Je hebt nog geen auto's gehuurd",
                                 style = TextStyle(
