@@ -1,8 +1,6 @@
 package android.compose.presentation.views.screens.cars
 
 import android.compose.common.Screens
-import android.compose.util.RetrofitInstance
-import android.compose.data.repository.cars.CarsRepositoryImplementation
 import android.compose.data.remote.response.CarItemResponse
 import android.compose.presentation.viewmodels.cars.CarsViewModel
 import android.compose.ui.components.BottomSheet
@@ -36,39 +34,40 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun CarsScreen(navController: NavController) {
-    val viewModel: CarsViewModel = viewModel(factory = CarsViewModelFactory())
+fun CarsScreen(navController: NavController, carsViewModel: CarsViewModel = hiltViewModel()) {
 
-    val selectedBrandFilters = viewModel.selectedBrandFilters.collectAsState().value
-    val selectedFuelFilters = viewModel.selectedFuelTypes.collectAsState().value
-    val selectedBodyFilters = viewModel.selectedBodyTypes.collectAsState().value
+    val selectedBrandFilters = carsViewModel.selectedBrandFilters.collectAsState().value
+    val selectedFuelFilters = carsViewModel.selectedFuelTypes.collectAsState().value
+    val selectedBodyFilters = carsViewModel.selectedBodyTypes.collectAsState().value
 
-    val noCarsFound = viewModel.noCarsFound.collectAsState().value
+    val noCarsFound = carsViewModel.noCarsFound.collectAsState().value
     val carsList = if (noCarsFound) {
-        viewModel.allCars.collectAsState().value
+        carsViewModel.allCars.collectAsState().value
     } else {
-        viewModel.cars.collectAsState().value
+        carsViewModel.cars.collectAsState().value
     }
 
     val context = LocalContext.current
 
-    LaunchedEffect(key1 = viewModel.showErrorToastChannel) {
-        viewModel.showErrorToastChannel.collectLatest { toastMessage ->
+    LaunchedEffect(key1 = carsViewModel.showErrorToastChannel) {
+        carsViewModel.showErrorToastChannel.collectLatest { toastMessage ->
             when (toastMessage) {
                 ToastMessage.GenericError -> {
                     Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
                 }
                 ToastMessage.NoCarsFound -> {
                     Toast.makeText(context, "No cars found with the selected filters", Toast.LENGTH_LONG).show()
-                    viewModel.resetFilters()
+                    carsViewModel.resetFilters()
+                }
+                ToastMessage.NetworkError -> {
+                    Toast.makeText(context, "Network error: Loading cars from memory", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -94,10 +93,10 @@ fun CarsScreen(navController: NavController) {
                 selectedFuelFilters = selectedFuelFilters,
                 selectedBodyFilters = selectedBodyFilters,
                 onApplyFilter = { brands, fuels, bodies ->
-                    viewModel.updateBrandFilters(brands)
-                    viewModel.updateFuelFilters(fuels)
-                    viewModel.updateBodyFilters(bodies)
-                    viewModel.applyFilters()
+                    carsViewModel.updateBrandFilters(brands)
+                    carsViewModel.updateFuelFilters(fuels)
+                    carsViewModel.updateBodyFilters(bodies)
+                    carsViewModel.applyFilters()
                 }
             )
 
@@ -175,11 +174,5 @@ fun CardDetails(navController: NavController, carsItem: CarItemResponse) {
                 Text("Meer informatie")
             }
         }
-    }
-}
-
-class CarsViewModelFactory : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CarsViewModel(CarsRepositoryImplementation(RetrofitInstance.autoMaatApi)) as T
     }
 }

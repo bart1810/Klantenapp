@@ -1,22 +1,24 @@
 package android.compose.presentation.viewmodels.cars
 
 import android.compose.util.Resource
-import android.compose.data.repository.cars.CarsRepository
 import android.compose.data.remote.response.CarItemResponse
+import android.compose.data.repository.cars.CarsRepository
 import android.compose.ui.components.ToastMessage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Named
 
-class CarsViewModel(
-    private val carsRepository: CarsRepository
+@HiltViewModel
+class CarsViewModel @Inject constructor(
+    @Named("carsRepo") private val carsRepository: CarsRepository
 ): ViewModel() {
     var selectedBrandFilters = MutableStateFlow<List<String>>(emptyList())
     var selectedFuelTypes = MutableStateFlow<List<String>>(emptyList())
@@ -49,15 +51,22 @@ class CarsViewModel(
                         }
                     }
                     is Resource.Error -> {
-                        _showErrorToastChannel.send(ToastMessage.GenericError)
+                        if (result.message == "Network error: Could not load cars") {
+                            // Detected a network error, notify the user that the app is in offline mode
+                            _showErrorToastChannel.send(ToastMessage.NetworkError)
+                        } else {
+                            // Other types of errors
+                            _showErrorToastChannel.send(ToastMessage.GenericError)
+                        }
                     }
                     is Resource.Loading -> {
-                        TODO()
+                        // Handle loading state if needed
                     }
                 }
             }
         }
     }
+
 
     fun updateBrandFilters(brands: List<String>) {
         selectedBrandFilters.value = brands

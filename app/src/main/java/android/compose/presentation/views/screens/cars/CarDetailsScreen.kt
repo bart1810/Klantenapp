@@ -2,6 +2,7 @@ import android.compose.data.local.AuthPreferences
 import android.compose.data.remote.response.CarItemResponse
 import android.compose.data.repository.cars.CarsRepositoryImplementation
 import android.compose.presentation.viewmodels.cars.CarDetailViewModel
+import android.compose.presentation.viewmodels.cars.CarsViewModel
 import android.compose.util.Resource
 import android.compose.util.RetrofitInstance
 import androidx.compose.foundation.clickable
@@ -38,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -45,14 +47,7 @@ import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CarDetailScreen(navController: NavController, carId: String?) {
-    val context = LocalContext.current
-    val authPreferences = AuthPreferences(context)
-    val carDetailViewModel: CarDetailViewModel = viewModel(factory = CarDetailViewModelFactory(authPreferences))
-    var openBookingBottomSheet by remember { mutableStateOf(false) }
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true)
-
+fun CarDetailScreen(navController: NavController, carId: String?, carDetailViewModel: CarDetailViewModel = hiltViewModel()) {
 
     LaunchedEffect(carId) {
         carId?.let {
@@ -60,6 +55,9 @@ fun CarDetailScreen(navController: NavController, carId: String?) {
         }
     }
 
+    var openBookingBottomSheet by remember { mutableStateOf(false) }
+    val bottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true)
     val carDetailsState = carDetailViewModel.carDetails.collectAsState().value
 
     Column(modifier = Modifier
@@ -222,20 +220,5 @@ fun TableLayout(carDetails: CarItemResponse) {
             Text("Prijs: ", fontWeight = FontWeight.Bold)
             Text("${carDetails.price}")
         }
-    }
-}
-
-class CarDetailViewModelFactory(
-    private val authPreferences: AuthPreferences
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(CarDetailViewModel::class.java)) {
-            return CarDetailViewModel(
-                CarsRepositoryImplementation(RetrofitInstance.autoMaatApi),
-                authPreferences
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

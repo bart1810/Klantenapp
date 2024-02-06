@@ -7,17 +7,20 @@ import android.compose.util.Resource
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
+import javax.inject.Inject
+import javax.inject.Named
 
-class CarDetailViewModel(
-    private val carsRepository: CarsRepository,
+@HiltViewModel
+class CarDetailViewModel @Inject constructor(
+    @Named("carsRepo") private val carsRepository: CarsRepository,
     private val authPreferences: AuthPreferences
 ): ViewModel() {
 
